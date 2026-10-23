@@ -2,71 +2,54 @@
 layout: default
 title: Home
 ---
-<section class="hero">
-  <div class="hero-text">
-    <p class="eyebrow">Finance · risk · data</p>
-    <h1>Hoi! I'm Amir,<br>a finance person in Utrecht.</h1>
-    <p class="lead">I like markets the way some people like puzzles: there is always a pattern
-      that looks obvious, and it is almost always wrong. I spend my days measuring risk, cleaning
-      messy data and checking whether the numbers actually mean what we think they mean.</p>
-    <p class="links">
-      <a href="{{ '/cv/' | relative_url }}">CV</a>
-      <a href="https://www.linkedin.com/in/{{ site.linkedin }}/" rel="noopener">LinkedIn ↗</a>
-      <a href="https://github.com/{{ site.github }}" rel="noopener">GitHub ↗</a>
-      <a href="mailto:{{ site.email }}">Email</a>
-    </p>
-  </div>
-  <div class="hero-photo">
-    <img src="{{ '/assets/img/amir.jpg' | relative_url }}" alt="Portrait of Amirmahdi Shokatabadi" width="900" height="899">
-  </div>
+<section class="hello">
+  <p class="wave" aria-hidden="true">👋</p>
+  <h1>Hoi, I'm Amir.</h1>
+  <p class="intro">I work in finance, and I genuinely enjoy it, which surprises people at parties.
+    My days are about measuring risk, cleaning up messy data and asking the slightly annoying
+    question: <em>"are we sure this number means what we think it means?"</em></p>
 </section>
 
-<blockquote class="quote">
-  <p>“The market can stay irrational longer than you can stay solvent.”</p>
-  <footer>Often attributed to John Maynard Keynes, and a very good reason to measure risk</footer>
-</blockquote>
-
-<section class="about">
-  <div class="about-block">
+<section class="note-grid">
+  <div class="note">
     <h2>Where I'm from</h2>
-    <p>I grew up in Iran, where I studied Financial Management at Kharazmi University and fell
-      for finance properly: first through investment courses, then through the endless
-      spreadsheets that come with them. I still think a well-built spreadsheet is a small work of art.</p>
+    <p>I grew up in Iran and studied Financial Management at Kharazmi University. That's where
+      finance clicked for me: markets are full of patterns that look obvious and turn out to be
+      wrong, and I like finding out why.</p>
   </div>
-  <div class="about-block">
+  <div class="note">
     <h2>Why the Netherlands</h2>
-    <p>In 2023 I came to Utrecht for a master's in Banking &amp; Finance, and the Netherlands has
-      kept me. I love the canals, the directness, the bikes everywhere and how a grey afternoon can
-      still be <em>gezellig</em>. I'm learning Dutch: <em>langzaam maar zeker</em>, slowly but
-      surely, and mostly by pretending to understand the jokes.</p>
-  </div>
-  <div class="about-block">
-    <h2>What I do</h2>
-    <p>Most recently I owned the portfolio and return calculations behind a trading app used by
-      millions, and before that I monitored market risk and reconciled trades at an investment
-      bank. On the research side, I work on climate risk in asset prices. More on the
-      <a href="{{ '/cv/' | relative_url }}">CV</a> and <a href="{{ '/research/' | relative_url }}">research</a> pages.</p>
-  </div>
-  <div class="about-block">
-    <h2>Outside of finance</h2>
-    <p>You'll find me swimming, on a hiking trail or playing music, usually not all at once. I
-      also write the occasional post about things I find interesting:
-      <a href="{{ '/interests/' | relative_url }}">interests &amp; posts</a>.</p>
+    <p>I came to Utrecht in 2023 for a master's in Banking &amp; Finance, and the country won me
+      over: the canals, the directness, the bikes, and how even a rainy afternoon can be
+      <em>gezellig</em>. I'm learning Dutch <em>langzaam maar zeker</em>, slowly but surely.</p>
   </div>
 </section>
 
-<section class="teasers">
-  <a class="teaser" href="{{ '/projects/' | relative_url }}">
-    <span class="teaser-label">Projects</span>
-    <span>Trading bots, risk models and research code, all open source.</span>
-  </a>
-  <a class="teaser" href="{{ '/research/' | relative_url }}">
-    <span class="teaser-label">Research</span>
-    <span>Do temperature anomalies move stock returns? My thesis, rebuilt and audited.</span>
-  </a>
-  {% assign latest = site.posts | first %}
-  <a class="teaser" href="{% if latest %}{{ latest.url | relative_url }}{% else %}{{ '/interests/' | relative_url }}{% endif %}">
-    <span class="teaser-label">Latest post</span>
-    <span>{% if latest %}{{ latest.title }}{% else %}Coming soon.{% endif %}</span>
-  </a>
+<aside class="factsheet" aria-label="Fact sheet">
+  <p class="factsheet-title">Fact sheet <span>as of {{ site.time | date: "%B %Y" }}</span></p>
+  <dl>
+    <div><dt>Based in</dt><dd>Utrecht, NL</dd></div>
+    <div><dt>Originally from</dt><dd>Iran</dd></div>
+    <div><dt>Day job</dt><dd>Risk, returns &amp; financial data</dd></div>
+    <div><dt>Research</dt><dd>Climate risk in asset prices</dd></div>
+    <div><dt>Languages</dt><dd>Persian, English, Dutch (in progress)</dd></div>
+    <div><dt>Off the clock</dt><dd>Swimming, hiking, music</dd></div>
+  </dl>
+</aside>
+
+<figure class="saying">
+  <blockquote>“The curious task of economics is to demonstrate to men how little they really know
+    about what they imagine they can design.”</blockquote>
+  <figcaption>F. A. Hayek, <cite>The Fatal Conceit</cite> (1988). A good reminder for anyone who builds risk models.</figcaption>
+</figure>
+
+<section class="paths">
+  <h2>Where to next?</h2>
+  <ul>
+    <li><a href="{{ '/cv/' | relative_url }}"><strong>CV</strong><span>Market risk, return measurement and product work, plus my studies.</span></a></li>
+    <li><a href="{{ '/projects/' | relative_url }}"><strong>Projects</strong><span>Trading bots, risk models and research code, all open source.</span></a></li>
+    <li><a href="{{ '/research/' | relative_url }}"><strong>Research</strong><span>Do hot months move stock prices? My thesis, rebuilt and audited.</span></a></li>
+    {% assign latest = site.posts | first %}
+    <li><a href="{% if latest %}{{ latest.url | relative_url }}{% else %}{{ '/interests/' | relative_url }}{% endif %}"><strong>Latest post</strong><span>{% if latest %}{{ latest.title }}{% else %}Coming soon.{% endif %}</span></a></li>
+  </ul>
 </section>

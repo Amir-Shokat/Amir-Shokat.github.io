@@ -25,3 +25,5 @@ You can also do this entirely on github.com: open the repository, go to the `_po
 click **Add file → Create new file**, paste the template, and click **Commit changes**.
 
 To hide a post without deleting it, add `published: false` to its header.
+
+Note: posts dated in the future (GitHub's clock is UTC) are not shown until that date arrives.

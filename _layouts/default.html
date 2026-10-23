@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title and page.title != "Home" %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+  <meta property="og:title" content="{{ page.title | default: site.title }}">
+  <meta property="og:description" content="{{ page.description | default: site.description | strip_html | truncate: 160 }}">
+  <meta property="og:image" content="{{ site.url }}/assets/img/amir.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6f6a'/%3E%3Ctext x='32' y='43' font-family='Georgia' font-size='30' fill='%23fbfaf7' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="{{ '/' | relative_url }}">
+        <span class="monogram" aria-hidden="true">AS</span>
+        <span class="brand-text"><strong>{{ site.title }}</strong><small>{{ site.tagline }}</small></span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        {% assign path = page.url %}
+        <a href="{{ '/cv/' | relative_url }}" {% if path == '/cv/' %}aria-current="page"{% endif %}>CV</a>
+        <a href="{{ '/projects/' | relative_url }}" {% if path == '/projects/' %}aria-current="page"{% endif %}>Projects</a>
+        <a href="{{ '/research/' | relative_url }}" {% if path == '/research/' %}aria-current="page"{% endif %}>Research</a>
+        <a href="{{ '/interests/' | relative_url }}" {% if path == '/interests/' or page.layout == 'post' %}aria-current="page"{% endif %}>Interests &amp; posts</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer wrap">
+    <p>
+      <a href="mailto:{{ site.email }}">Email</a> ·
+      <a href="https://www.linkedin.com/in/{{ site.linkedin }}/" rel="noopener">LinkedIn</a> ·
+      <a href="https://github.com/{{ site.github }}" rel="noopener">GitHub</a>
+    </p>
+    <p class="muted">© {{ site.time | date: "%Y" }} {{ site.author }} · Made in Utrecht, with too much coffee.</p>
+  </footer>
+  {% if page.scripts %}<script src="{{ '/assets/js/site.js' | relative_url }}"></script>{% endif %}
+</body>
+</html>

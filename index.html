@@ -1,355 +1,72 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Amirmahdi Shokatabadi</title>
-  <meta name="description" content="Amirmahdi Shokatabadi: financial risk analyst and product owner. MSc Banking & Finance, Utrecht University. CV, research and code portfolio.">
-  <meta property="og:title" content="Amirmahdi Shokatabadi">
-  <meta property="og:description" content="Financial risk analyst and product owner. CV, research and code portfolio.">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Ctext x='32' y='42' font-family='Arial' font-size='28' font-weight='700' fill='white' text-anchor='middle'%3EAS%3C/text%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script>
-    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
-  </script>
-</head>
-<body>
-  <a class="skip" href="#main">Skip to content</a>
+---
+layout: default
+title: Home
+---
+<section class="hero">
+  <div class="hero-text">
+    <p class="eyebrow">Finance · risk · data</p>
+    <h1>Hoi! I'm Amir,<br>a finance person in Utrecht.</h1>
+    <p class="lead">I like markets the way some people like puzzles: there is always a pattern
+      that looks obvious, and it is almost always wrong. I spend my days measuring risk, cleaning
+      messy data and checking whether the numbers actually mean what we think they mean.</p>
+    <p class="links">
+      <a href="{{ '/cv/' | relative_url }}">CV</a>
+      <a href="https://www.linkedin.com/in/{{ site.linkedin }}/" rel="noopener">LinkedIn ↗</a>
+      <a href="https://github.com/{{ site.github }}" rel="noopener">GitHub ↗</a>
+      <a href="mailto:{{ site.email }}">Email</a>
+    </p>
+  </div>
+  <div class="hero-photo">
+    <img src="{{ '/assets/img/amir.jpg' | relative_url }}" alt="Portrait of Amirmahdi Shokatabadi" width="900" height="899">
+  </div>
+</section>
 
-  <header class="topbar">
-    <nav class="wrap nav" aria-label="Sections">
-      <a class="brand" href="#top">Amirmahdi Shokatabadi</a>
-      <div class="nav-links">
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#research">Research</a>
-        <a href="#education">Education</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div class="nav-actions">
-        <button class="icon-btn" id="print-btn" type="button" title="Print or save as PDF" aria-label="Print or save as PDF">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2M7 14h10v7H7z"/></svg>
-        </button>
-        <button class="icon-btn" id="theme-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        </button>
-      </div>
-    </nav>
-  </header>
+<blockquote class="quote">
+  <p>“The market can stay irrational longer than you can stay solvent.”</p>
+  <footer>Often attributed to John Maynard Keynes, and a very good reason to measure risk</footer>
+</blockquote>
 
-  <main id="main">
-    <!-- HERO -->
-    <section class="hero wrap" id="top">
-      <p class="eyebrow">Financial Risk &amp; Product · Utrecht, Netherlands</p>
-      <h1>Amirmahdi Shokatabadi</h1>
-      <p class="lead">I work where markets, data and software meet: measuring market risk, reconciling
-        trades and positions, and turning return and risk methodology into products people use.
-        MSc Banking &amp; Finance (Utrecht University).</p>
-      <ul class="facts">
-        <li><strong>7M+</strong><span>users of the portfolio product I owned</span></li>
-        <li><strong>50%+</strong><span>fewer money-weighted return discrepancies</span></li>
-        <li><strong>2nd</strong><span>place, Optiver algorithmic-trading competition</span></li>
-        <li><strong>8</strong><span>reproducible research and code projects</span></li>
-      </ul>
-      <div class="cta">
-        <a class="btn primary" href="#projects">See the projects</a>
-        <a class="btn" href="mailto:shokatamirmahdi@gmail.com">Email me</a>
-        <a class="btn ghost" href="https://github.com/Amir-Shokat" rel="noopener">GitHub</a>
-        <a class="btn ghost" href="https://www.linkedin.com/in/amirmahdishokatabadi/" rel="noopener">LinkedIn</a>
-      </div>
-      <p class="note">Eligible for the Dutch orientation-year permit; no sponsorship needed.</p>
-    </section>
+<section class="about">
+  <div class="about-block">
+    <h2>Where I'm from</h2>
+    <p>I grew up in Iran, where I studied Financial Management at Kharazmi University and fell
+      for finance properly: first through investment courses, then through the endless
+      spreadsheets that come with them. I still think a well-built spreadsheet is a small work of art.</p>
+  </div>
+  <div class="about-block">
+    <h2>Why the Netherlands</h2>
+    <p>In 2023 I came to Utrecht for a master's in Banking &amp; Finance, and the Netherlands has
+      kept me. I love the canals, the directness, the bikes everywhere and how a grey afternoon can
+      still be <em>gezellig</em>. I'm learning Dutch: <em>langzaam maar zeker</em>, slowly but
+      surely, and mostly by pretending to understand the jokes.</p>
+  </div>
+  <div class="about-block">
+    <h2>What I do</h2>
+    <p>Most recently I owned the portfolio and return calculations behind a trading app used by
+      millions, and before that I monitored market risk and reconciled trades at an investment
+      bank. On the research side, I work on climate risk in asset prices. More on the
+      <a href="{{ '/cv/' | relative_url }}">CV</a> and <a href="{{ '/research/' | relative_url }}">research</a> pages.</p>
+  </div>
+  <div class="about-block">
+    <h2>Outside of finance</h2>
+    <p>You'll find me swimming, on a hiking trail or playing music, usually not all at once. I
+      also write the occasional post about things I find interesting:
+      <a href="{{ '/interests/' | relative_url }}">interests &amp; posts</a>.</p>
+  </div>
+</section>
 
-    <!-- EXPERIENCE -->
-    <section class="section wrap" id="experience">
-      <h2>Experience</h2>
-
-      <article class="role">
-        <header>
-          <div>
-            <h3>Financial Product Owner, Portfolio &amp; Trade Data</h3>
-            <p class="org">Mofid Securities</p>
-          </div>
-          <p class="when">Jun 2026 to Oct 2026</p>
-        </header>
-        <p class="context">Brokerage and asset manager with 13M+ clients and $1.5B+ AUM. Portfolio team of the Easy Trader app (7M+ users).</p>
-        <ul>
-          <li>Led the <b>Time-Weighted Return</b> feature from methodology to release readiness: 95%+ calculation success and 90%+ displayable rate on production data.</li>
-          <li>Cut <b>Money-Weighted Return</b> discrepancies by 50%+ for 2M+ users by tracing mismatches to edge cases and prioritising the fixes.</li>
-          <li>Defined transaction-mapping rules separating trades, dividends, bonus shares, rights issues, broker changes and credit events from external cash flows, so downstream values and returns stayed correct.</li>
-          <li>Reduced return mismatches by about 30% by aligning the Options and Credit teams on bringing their data into the shared calculations.</li>
-          <li>Co-owned the backlog of a DevOps squad: refinement, two-week sprints toward quarterly OKRs, user stories and acceptance criteria.</li>
-          <li>Specified monitoring and alerting (service health, data freshness, failure rates, runbooks) and joined release go/no-go decisions.</li>
-          <li>Mapped legacy and new APIs field by field and documented the migration risks for trade and portfolio data.</li>
-          <li>Designed a portfolio admin panel (prices, trades, corporate actions, schedulers), prototyped with Claude Code and now in production.</li>
-        </ul>
-      </article>
-
-      <article class="role">
-        <header>
-          <div>
-            <h3>Financial Risk Analyst, Market Risk &amp; Trade Controls</h3>
-            <p class="org">Damavand Investment Bank</p>
-          </div>
-          <p class="when">Jan 2025 to Mar 2026</p>
-        </header>
-        <p class="context">Investment bank with $500M in assets under management.</p>
-        <ul>
-          <li>Monitored market risk for equity, fixed-income and gold funds: VaR (historical and Monte Carlo), stress tests, duration and liquidity. Reviewed hedges through option Greeks.</li>
-          <li>Reconciled daily equity and fixed-income trades, positions and cash against custodian, trading and accounting systems, and automated the matching with Python and SQL.</li>
-          <li>Investigated trade breaks, failed settlements and pricing discrepancies with trading, compliance and finance; documented root causes and added preventive controls.</li>
-          <li>Built the data pipeline behind fund risk reports: exchange APIs, scraping and validation (<a href="#p-fund-risk">Fund Risk Toolkit</a>, <a href="#p-tehran-data">Tehran Market Data</a>).</li>
-          <li>Tracked key risk indicators (failed trades, settlement delays, pricing errors, limit breaches) in Power BI for the heads of investment, compliance and operations.</li>
-        </ul>
-      </article>
-
-      <article class="role">
-        <header>
-          <div>
-            <h3>Research Assistant</h3>
-            <p class="org">RiskLab · Toronto (remote)</p>
-          </div>
-          <p class="when">Jul 2024 to Dec 2024</p>
-        </header>
-        <ul>
-          <li>Co-developed <b>RiskLabAI</b>, an open-source Python library for financial machine learning (<code>pip install RiskLabAI</code>): financial data structures, labelling methods and sample weighting.</li>
-        </ul>
-      </article>
-
-      <article class="role">
-        <header>
-          <div>
-            <h3>Research Assistant</h3>
-            <p class="org">Utrecht University · Utrecht</p>
-          </div>
-          <p class="when">Jul 2024 to Aug 2024</p>
-        </header>
-        <ul>
-          <li>Built and processed large datasets in Python for a research project on biodiversity and sustainability risk in financial markets.</li>
-        </ul>
-      </article>
-
-      <article class="role">
-        <header>
-          <div>
-            <h3>Teaching Assistant</h3>
-            <p class="org">University of Toronto, <i>Financial AI</i> · Kharazmi University, <i>Fundamentals of Investment Management</i></p>
-          </div>
-          <p class="when">2022, 2024</p>
-        </header>
-        <ul>
-          <li>Developed course functions for preparing raw financial data for machine learning: bar generation, labelling and sample weights.</li>
-        </ul>
-      </article>
-    </section>
-
-    <!-- PROJECTS -->
-    <section class="section wrap" id="projects">
-      <div class="section-head">
-        <h2>Projects</h2>
-        <p>Every project is a repository with a README and reproducible code; the software
-          packages also have unit tests and continuous integration. Each one started as a thesis,
-          coursework or work analysis; I rebuilt them so anyone can run them, and fixed the errors
-          I found in the originals.</p>
-      </div>
-      <div class="filters" role="group" aria-label="Filter projects">
-        <button class="chip active" data-filter="all" type="button">All</button>
-        <button class="chip" data-filter="trading" type="button">Trading</button>
-        <button class="chip" data-filter="risk" type="button">Risk</button>
-        <button class="chip" data-filter="research" type="button">Research</button>
-        <button class="chip" data-filter="data" type="button">Data engineering</button>
-      </div>
-
-      <div class="grid">
-        <article class="card" id="p-thesis" data-tags="research">
-          <img src="assets/img/thesis.png" alt="Forest plot of corrected temperature-anomaly coefficients for returns and volatility; all 95% intervals include zero" loading="lazy">
-          <div class="card-body">
-            <p class="kicker">MSc thesis · Utrecht University</p>
-            <h3>Warming Trends: Replication &amp; Audit</h3>
-            <p>A reproducible rebuild of my thesis: firm-level returns and volatility for about 18,000 US firms matched to PRISM temperature anomalies at each headquarters, with fixed-effects regressions and two-way clustered errors.</p>
-            <p class="finding"><b>Found:</b> the original matched weather to firms by city name only, so 45% of firm-months got another town's weather. Once that is corrected, there is no detectable temperature effect.</p>
-            <ul class="tags"><li>Panel data</li><li>Climate finance</li><li>Replication</li></ul>
-            <a class="more" href="https://github.com/Amir-Shokat/warming-trends-replication" rel="noopener">View repository →</a>
-          </div>
-        </article>
-
-        <article class="card" id="p-fund-risk" data-tags="risk data">
-          <img src="assets/img/fundrisk.png" alt="Bar chart of 1-day historical VaR by holding" loading="lazy">
-          <div class="card-body">
-            <p class="kicker">Work · Python package</p>
-            <h3>Fund Risk Toolkit</h3>
-            <p>The reusable core of 60+ fund-reporting notebooks: risk-adjusted performance, VaR/ES with a Kupiec backtest, liquidity versus base volume, Jalali-calendar bond duration and account reconciliation.</p>
-            <p class="finding"><b>Fixed:</b> a date conversion that was about 80 days off, and bond durations discounted at the coupon rate.</p>
-            <ul class="tags"><li>VaR</li><li>Duration</li><li>Reconciliation</li><li>37 tests</li></ul>
-            <a class="more" href="https://github.com/Amir-Shokat/fund-risk-toolkit" rel="noopener">View repository →</a>
-          </div>
-        </article>
-
-        <article class="card" data-tags="risk research">
-          <img src="assets/img/pca.png" alt="Level, slope and curvature factor loadings of the euro yield curve" loading="lazy">
-          <div class="card-body">
-            <p class="kicker">Utrecht University · Risk Management</p>
-            <h3>Yield-Curve PCA &amp; Interest-Rate VaR</h3>
-            <p>PCA of daily euro yield-curve moves and VaR for a swap portfolio, comparing 1, 2 and 3-factor models with historical simulation, on public ECB data.</p>
-            <p class="finding"><b>Found:</b> one bad day of quotes had created the "third factor" in the original assignment. A two-factor model understates VaR by about 20%.</p>
-            <ul class="tags"><li>PCA</li><li>VaR / ES</li><li>Data quality</li></ul>
-            <a class="more" href="https://github.com/Amir-Shokat/yield-curve-pca-var" rel="noopener">View repository →</a>
-          </div>
-        </article>
-
-        <article class="card" data-tags="trading">
-          <img src="assets/img/options.png" alt="Portfolio delta, PnL and positions of the options market maker" loading="lazy">
-          <div class="card-body">
-            <p class="kicker">Utrecht University · Algorithms in Finance</p>
-            <h3>Options Market Making</h3>
-            <p>A Black-Scholes market maker with inventory-aware quoting and delta hedging across two listings, plus a simulated options exchange so the bot runs without Optiver's private platform.</p>
-            <p class="finding"><b>Result:</b> 2nd place in the course's Optiver competition (team of five).</p>
-            <ul class="tags"><li>Greeks</li><li>Market making</li><li>53 tests</li></ul>
-            <a class="more" href="https://github.com/Amir-Shokat/options-market-making" rel="noopener">View repository →</a>
-          </div>
-        </article>
-
-        <article class="card" data-tags="trading">
-          <img src="assets/img/pairs.png" alt="Spread, positions and PnL of the pairs-trading backtest" loading="lazy">
-          <div class="card-body">
-            <p class="kicker">Utrecht University · Algorithms in Finance</p>
-            <h3>Pairs Trading with Cointegration</h3>
-            <p>Engle-Granger pair screening and a bid/ask-aware spread strategy with adaptive thresholds, hedge-ratio checks and position limits, backtested on a simulated order book.</p>
-            <p class="finding"><b>Fixed:</b> the second leg is now sized on actual fills, and the bot no longer trades on noise at start-up.</p>
-            <ul class="tags"><li>Cointegration</li><li>Stat-arb</li><li>17 tests</li></ul>
-            <a class="more" href="https://github.com/Amir-Shokat/pairs-trading-cointegration" rel="noopener">View repository →</a>
-          </div>
-        </article>
-
-        <article class="card" data-tags="research">
-          <img src="assets/img/gpr.png" alt="Geopolitical risk index with Bitcoin and gold performance" loading="lazy">
-          <div class="card-body">
-            <p class="kicker">Utrecht University · FinTech</p>
-            <h3>Is Bitcoin the New Gold?</h3>
-            <p>Regressions of Bitcoin and gold returns and volatility on the Caldara-Iacoviello Geopolitical Risk index, with macro controls, HAC errors and robustness checks. Fully reproducible from public data.</p>
-            <p class="finding"><b>Found:</b> Bitcoin is no geopolitical hedge; gold reacts only with a one-day lag.</p>
-            <ul class="tags"><li>Econometrics</li><li>Time series</li><li>Reproducible</li></ul>
-            <a class="more" href="https://github.com/Amir-Shokat/bitcoin-gold-geopolitical-risk" rel="noopener">View repository →</a>
-          </div>
-        </article>
-
-        <article class="card" data-tags="research">
-          <img src="assets/img/sentiment.png" alt="Polarity of news articles over time" loading="lazy">
-          <div class="card-body">
-            <p class="kicker">Utrecht University · Text Mining</p>
-            <h3>News Sentiment &amp; Media Bias</h3>
-            <p>Did CNBC cover Donald Trump in a different tone? Article and sentence-level sentiment, significance tests, bootstrap intervals and TF-IDF similarity, for any term and any news CSV.</p>
-            <p class="finding"><b>Found:</b> no difference in tone (p = 0.94), but slightly less subjective language (p = 0.02).</p>
-            <ul class="tags"><li>NLP</li><li>Hypothesis tests</li></ul>
-            <a class="more" href="https://github.com/Amir-Shokat/news-sentiment-analysis" rel="noopener">View repository →</a>
-          </div>
-        </article>
-
-        <article class="card" id="p-tehran-data" data-tags="data">
-          <div class="card-art" aria-hidden="true">
-            <svg viewBox="0 0 320 150">
-              <g class="edges"><line x1="70" y1="40" x2="160" y2="75"/><line x1="70" y1="110" x2="160" y2="75"/><line x1="250" y1="35" x2="160" y2="75"/><line x1="250" y1="115" x2="160" y2="75"/><line x1="250" y1="115" x2="200" y2="135"/><line x1="70" y1="110" x2="110" y2="138"/><line x1="250" y1="35" x2="290" y2="75"/></g>
-              <circle class="hub" cx="160" cy="75" r="16"/><circle class="n" cx="70" cy="40" r="8"/><circle class="n" cx="70" cy="110" r="8"/><circle class="n" cx="250" cy="35" r="8"/><circle class="n" cx="250" cy="115" r="8"/><circle class="n" cx="200" cy="135" r="6"/><circle class="n" cx="110" cy="138" r="6"/><circle class="n" cx="290" cy="75" r="6"/>
-            </svg>
-          </div>
-          <div class="card-body">
-            <p class="kicker">Work · Python package</p>
-            <h3>Tehran Market Data</h3>
-            <p>Tested clients for TSETMC prices, base volume and shareholder panels, the FIPIRAN fund registry and the Mabna instrument database, with retries and rate limiting, plus a network of 505 funds and the firms behind them.</p>
-            <p class="finding"><b>Found:</b> five guarantors back two thirds of all fund assets.</p>
-            <ul class="tags"><li>APIs</li><li>Networks</li><li>13 tests</li></ul>
-            <a class="more" href="https://github.com/Amir-Shokat/tehran-market-data" rel="noopener">View repository →</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- RESEARCH -->
-    <section class="section wrap" id="research">
-      <h2>Research</h2>
-      <div class="two-col">
-        <article class="panel">
-          <p class="kicker">MSc thesis · Utrecht University · 2024</p>
-          <h3>Warming Trends: Analysing the Impact of Temperature Anomaly on the Risk and Return of the US Stock Market</h3>
-          <p>A panel of climate data, firm-level returns and company characteristics for about 18,000
-            US-listed firms. Fixed-effects panel regressions test whether temperature anomalies are
-            priced into equity risk and returns. In a later
-            <a href="#p-thesis">replication and audit</a> I rebuilt the pipeline, corrected how weather
-            was matched to headquarters, and found no detectable effect.</p>
-        </article>
-        <article class="panel">
-          <p class="kicker">Interests</p>
-          <h3>Sustainable finance · Asset pricing · Market risk · Applied econometrics</h3>
-          <p>Other academic work: an event study of M&amp;A announcements in US tech, case studies on
-            blended finance for climate action, and historical and model-building VaR.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- EDUCATION -->
-    <section class="section wrap" id="education">
-      <h2>Education</h2>
-      <div class="two-col">
-        <article class="panel">
-          <p class="when">Sep 2023 to Sep 2024</p>
-          <h3>MSc Banking and Finance</h3>
-          <p class="org">Utrecht University, Netherlands · GPA 7.11 / 10</p>
-          <p>Financial Data Analytics, Algorithms in Finance, Risk Management, Asset Pricing,
-            Econometrics, Investment Management, FinTech, Text Mining. Part of the CFA Institute University Affiliation Program.</p>
-        </article>
-        <article class="panel">
-          <p class="when">Sep 2018 to Jul 2022</p>
-          <h3>BSc Financial Management</h3>
-          <p class="org">Kharazmi University, Iran · GPA 3.57 / 4 (final two years 3.7)</p>
-          <p>Investment Management, Statistics, Mathematics, Operations Research, Econometrics.
-            Top 1% (rank 686 of ~200,000) in the national university entrance exam.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="section wrap" id="skills">
-      <h2>Skills</h2>
-      <dl class="skills">
-        <div><dt>Markets &amp; risk</dt><dd>Market risk (VaR, ES, stress tests) · return measurement (TWR, MWR) · Sharpe, Sortino, beta · equities and fixed income · option Greeks · trade flow and corporate actions · reconciliation and controls</dd></div>
-        <div><dt>Product</dt><dd>Roadmaps and backlogs · user stories and acceptance criteria · BDD · release planning · Scrum and Kanban · Jira · stakeholder alignment across business and IT</dd></div>
-        <div><dt>Data &amp; code</dt><dd>Python (pandas, NumPy, statsmodels, linearmodels, scikit-learn, spaCy) · SQL (PostgreSQL) · Julia · Git · pytest · Power BI (DAX) · Excel/VBA · LaTeX · Stata</dd></div>
-        <div><dt>Methods</dt><dd>Panel data · time series · cointegration · PCA · Monte Carlo simulation · event studies · NLP and sentiment analysis</dd></div>
-        <div><dt>AI tools</dt><dd>Claude Code, Codex, Cursor, ChatGPT for prototyping and testing</dd></div>
-        <div><dt>Languages</dt><dd>Persian (native) · English (fluent) · Dutch (basic, improving)</dd></div>
-      </dl>
-      <details class="certs">
-        <summary>Courses and certificates</summary>
-        <ul>
-          <li>Text Mining, Utrecht University (2024)</li>
-          <li>DataCamp: Introduction to DAX in Power BI, Web Scraping in Python, Intermediate SQL (2024)</li>
-          <li>DataCamp: GitHub Concepts, Introduction to Julia (2024)</li>
-          <li>DataCamp: Time Series Analysis, Visualizing and Manipulating Time Series Data in Python (2024)</li>
-        </ul>
-      </details>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="section wrap contact" id="contact">
-      <h2>Contact</h2>
-      <p>Open to roles in market risk, risk analytics and financial product ownership, and to PhD positions in empirical finance.</p>
-      <div class="cta">
-        <a class="btn primary" href="mailto:shokatamirmahdi@gmail.com">shokatamirmahdi@gmail.com</a>
-        <a class="btn ghost" href="https://github.com/Amir-Shokat" rel="noopener">github.com/Amir-Shokat</a>
-        <a class="btn ghost" href="https://www.linkedin.com/in/amirmahdishokatabadi/" rel="noopener">LinkedIn</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer wrap">
-    <p>© <span id="year">2026</span> Amirmahdi Shokatabadi · Built as a plain static site, hosted on GitHub Pages.</p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<section class="teasers">
+  <a class="teaser" href="{{ '/projects/' | relative_url }}">
+    <span class="teaser-label">Projects</span>
+    <span>Trading bots, risk models and research code, all open source.</span>
+  </a>
+  <a class="teaser" href="{{ '/research/' | relative_url }}">
+    <span class="teaser-label">Research</span>
+    <span>Do temperature anomalies move stock returns? My thesis, rebuilt and audited.</span>
+  </a>
+  {% assign latest = site.posts | first %}
+  <a class="teaser" href="{% if latest %}{{ latest.url | relative_url }}{% else %}{{ '/interests/' | relative_url }}{% endif %}">
+    <span class="teaser-label">Latest post</span>
+    <span>{% if latest %}{{ latest.title }}{% else %}Coming soon.{% endif %}</span>
+  </a>
+</section>

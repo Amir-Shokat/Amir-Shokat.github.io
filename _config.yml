@@ -1,0 +1,20 @@
+title: Amirmahdi Shokatabadi
+tagline: Finance, risk & data · Utrecht
+description: Amirmahdi (Amir) Shokatabadi, a finance person in Utrecht. Risk, markets, data, research and the occasional post.
+url: https://amir-shokat.github.io
+baseurl: ""
+author: Amirmahdi Shokatabadi
+email: shokatamirmahdi@gmail.com
+github: Amir-Shokat
+linkedin: amirmahdishokatabadi
+
+markdown: kramdown
+kramdown:
+  input: GFM
+permalink: /posts/:year/:title/
+timezone: Europe/Amsterdam
+
+exclude:
+  - README.md
+  - LICENSE
+  - POSTING.md

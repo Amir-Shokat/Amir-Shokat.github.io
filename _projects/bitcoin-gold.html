@@ -1,0 +1,68 @@
+---
+title: Is Bitcoin the New Gold?
+order: 6
+kicker: Utrecht University · FinTech
+thumb: gpr.png
+tags: research
+summary: Gold is the classic safe place to hide when wars or crises break out. Many people say Bitcoin is "digital gold". I tested that claim against ten years of data on geopolitical tension.
+question: When geopolitical risk rises, do Bitcoin and gold go up (a hedge), or just get more volatile?
+built: A fully reproducible study that downloads the Geopolitical Risk index, Bitcoin and gold prices and US macro controls, and runs regressions with robust standard errors and several robustness checks.
+result: Bitcoin does not behave like a safe haven. Gold reacts only with a one-day delay. Interest rates and credit conditions matter far more than headlines.
+skills: Econometrics · time-series data · research design · reproducible analysis · Python
+tech: OLS with Newey-West (HAC) standard errors, Breusch-Pagan tests, lagged and sub-sample specifications, and a top-decile shock analysis. Bitcoin is sampled on gold trading days so both returns cover the same calendar interval.
+repo: bitcoin-gold-geopolitical-risk
+tests: 7
+chartjs: true
+demo: hedge
+toc: [["idea", "The question"], ["timeline", "Ten years at a glance"], ["results", "What the data says"], ["shocks", "The biggest scares"], ["learned", "What I learned"]]
+---
+<h2 id="idea">The question</h2>
+<p>When tensions rise between countries, investors traditionally buy gold: it can't be printed and
+  holds its value. Bitcoin also can't be printed, which led to the slogan "digital gold". If that's
+  true, Bitcoin should <strong>rise when geopolitical risk rises</strong>.</p>
+<p>To measure geopolitical risk, I used the <strong>Geopolitical Risk (GPR) index</strong> by
+  economists at the US Federal Reserve. It counts newspaper articles about wars, terrorism and tensions
+  between countries every day.</p>
+
+<h2 id="timeline">Ten years at a glance</h2>
+<div class="demo" id="timeline-demo">
+  <div class="demo-head"><h3>Geopolitical risk vs gold and Bitcoin</h3><span class="demo-tag">Explore</span></div>
+  <p class="toolbar"><span class="segmented" id="h-show">
+    <button type="button" data-v="both" aria-pressed="true">Both</button>
+    <button type="button" data-v="gold" aria-pressed="false">Gold only</button>
+    <button type="button" data-v="btc" aria-pressed="false">Bitcoin only</button></span></p>
+  <div class="chart tall"><canvas id="h-timeline" aria-label="Geopolitical risk index with gold and Bitcoin growth"></canvas></div>
+  <p class="demo-note">Grey area: the GPR index (30-day average, right axis). Lines: growth of €100 invested in September 2014 (left axis, log scale). Hover over a marker to see the event.</p>
+</div>
+<p>Big jumps in risk (the Paris attacks, the invasion of Ukraine, the war in Gaza) don't line up with
+  clear moves in either asset. To go beyond eyeballing, the study runs a regression on every trading
+  day, controlling for interest rates and credit conditions, which also move both assets.</p>
+
+<h2 id="results">What the data says</h2>
+<div class="demo" id="results-demo">
+  <div class="demo-head"><h3>How returns react to a 10% jump in geopolitical risk</h3><span class="demo-tag">Explore</span></div>
+  <p class="toolbar"><span class="segmented" id="h-spec"></span></p>
+  <div class="chart short"><canvas id="h-effects" aria-label="Estimated effect on returns with confidence intervals"></canvas></div>
+  <p class="callout" id="h-read"></p>
+</div>
+<ul>
+  <li><strong>Same day:</strong> neither asset moves in a statistically meaningful way when risk jumps.</li>
+  <li><strong>Gold, one day later:</strong> gold rises by about <span id="h-lag"></span> the day after a 10% jump in risk, and that effect is statistically significant. It looks like a slow-moving safe haven.</li>
+  <li><strong>Bitcoin:</strong> its estimates are mostly negative. In 2019-2024 it tended to <em>fall</em> when risk rose, the opposite of a hedge.</li>
+</ul>
+
+<h2 id="shocks">The biggest scares</h2>
+<p>Averages can hide what happens in extreme moments, so I also looked only at the 10% of days with
+  the largest jumps in geopolitical risk.</p>
+<div class="demo" id="shock-demo">
+  <div class="demo-head"><h3>Average daily return: scare days vs normal days</h3></div>
+  <div class="chart short"><canvas id="h-shocks" aria-label="Average returns on shock days versus normal days"></canvas></div>
+  <p class="demo-note">Error bars show ±2 standard errors. Bitcoin's average on scare days looks higher, but it is far too noisy to be distinguished from normal days, and its volatility rises on those days.</p>
+</div>
+
+<h2 id="learned">What I learned</h2>
+<ul>
+  <li><strong>Slogans need testing.</strong> "Digital gold" doesn't survive contact with the data, at least as a geopolitical hedge.</li>
+  <li><strong>Use the right standard errors.</strong> Volatility measured over rolling windows is strongly autocorrelated. Ordinary p-values overstate significance; robust (HAC) errors fix that.</li>
+  <li><strong>Make research reproducible.</strong> The original group project left tables but no code. I rebuilt it so a single command downloads the data and reproduces every number.</li>
+</ul>

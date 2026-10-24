@@ -1,0 +1,67 @@
+---
+title: Who Stands Behind Iran's Mutual Funds?
+order: 8
+kicker: Work · Market data engineering
+thumb: ""
+tags: data risk
+summary: I built the data tools that collected Iranian market data for our risk reports, and used them to map the firms behind every mutual fund. Fund management turned out to be spread out; liquidity guarantees are far more concentrated.
+question: Where does the market data come from, and how concentrated are the firms that manage and guarantee Iran's mutual funds?
+built: Tested Python clients for the Tehran Stock Exchange and the national fund registry (prices, base volumes, shareholders, a daily panel of every fund), and a network analysis of funds and firms.
+result: Management is spread over 155 firms. Only 44 funds (22% of assets) have a liquidity guarantor, and five banks and brokers back two thirds of that guaranteed money.
+skills: Data engineering · API integration · concentration and counterparty risk · Python · testing
+tech: A shared HTTP layer with retries, back-off and rate limiting; clients for TSETMC, FIPIRAN and Mabna (token from environment variables only); Persian name normalisation; incremental fund-panel updates; network and Herfindahl-Hirschman concentration measures. Tested against recorded responses, no network needed.
+repo: tehran-market-data
+tests: 27
+chartjs: true
+demo: funds
+toc: [["idea", "The data problem"], ["map", "Who backs the funds"], ["stress", "What if"], ["tools", "The tools"], ["learned", "What I learned"]]
+---
+<h2 id="idea">The data problem</h2>
+<p>Risk reports are only as good as their data. In Iran, market data is spread over several public
+  websites with different formats, Persian text in mixed character sets, and dates on the Persian
+  calendar. At the bank, collecting it by hand took hours for every report.</p>
+<p>I wrote tools that collect it automatically: daily prices and trading volumes from the Tehran Stock
+  Exchange, the major shareholders of each fund, and a daily snapshot of every mutual fund from the
+  national fund registry (FIPIRAN).</p>
+
+<h2 id="map">Who stands behind the funds?</h2>
+<p>Every Iranian mutual fund has a <strong>manager</strong> that invests the money and a
+  <strong>guarantor</strong>, usually a bank or broker, that promises to buy back units when
+  investors want to cash out. Not every fund has one: exchange-traded funds, for example, can be sold on
+  the stock exchange instead. If a guarantor gets into trouble, every fund it backs is affected at once.</p>
+
+<div class="demo" id="map-demo">
+  <div class="demo-head"><h3>Share of all fund assets, by firm</h3><span class="demo-tag">Explore</span></div>
+  <p class="toolbar"><span class="segmented" id="n-role">
+    <button type="button" data-v="guarantor" aria-pressed="true">Guarantors</button>
+    <button type="button" data-v="manager" aria-pressed="false">Managers</button></span></p>
+  <div class="stats" id="n-stats"></div>
+  <div class="chart tall"><canvas id="n-bars" aria-label="Top ten firms by share of fund assets"></canvas></div>
+  <p class="demo-note" id="n-note"></p>
+</div>
+
+<h2 id="stress">What if the biggest guarantors had problems?</h2>
+<div class="demo" id="stress-demo">
+  <div class="demo-head"><h3>Concentration stress test</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls"><div class="control"><label for="n-k">Largest guarantors in trouble <output id="n-k-out"></output></label><input id="n-k" type="range" min="1" max="10" step="1" value="3"></div></div>
+  <div class="stats" id="n-stress"></div>
+  <div class="chart short"><canvas id="n-curve" aria-label="Share of fund assets affected"></canvas></div>
+  <p class="callout" id="n-read"></p>
+</div>
+<p>Fund <em>management</em> is fragmented, with more than 150 managers. Only a minority of funds have a
+  liquidity guarantor at all, but for those that do, the guarantees sit with very few institutions.
+  That risk is invisible when you look at funds one by one, and obvious when you map the whole market.</p>
+
+<h2 id="tools">The tools</h2>
+<ul>
+  <li><strong>Exchange data:</strong> full price histories, the "base volume" that decides how far a price may move each day, and daily major-shareholder lists, with automatic retries when the exchange's servers are busy.</li>
+  <li><strong>Fund panel:</strong> a day-by-day table of every fund (NAV, returns, asset mix, size, manager and guarantor) that can be built from scratch or updated with just the new days.</li>
+  <li><strong>Name cleaning:</strong> the same firm appears under several spellings (Arabic or Persian letters, legal suffixes, extra spaces). Without cleaning, six managers were counted twice.</li>
+</ul>
+
+<h2 id="learned">What I learned</h2>
+<ul>
+  <li><strong>Look at the whole system, not single parts.</strong> The most important risk here only appears in the network view.</li>
+  <li><strong>Clean names before you count.</strong> Simple text normalisation changed the concentration numbers.</li>
+  <li><strong>Be a good API citizen.</strong> Rate limits, retries and skipping weekends (Thursday and Friday in Iran) cut the number of requests by about 30%.</li>
+</ul>

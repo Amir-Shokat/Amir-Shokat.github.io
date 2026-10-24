@@ -1,0 +1,82 @@
+---
+title: Fund Risk Toolkit
+order: 1
+kicker: Work · Financial Risk Analyst
+thumb: fundrisk.png
+tags: risk data
+summary: The analysis behind the monthly risk reports I produced for equity, bond and gold funds at an investment bank, turned from 60+ copied notebooks into one tested tool.
+question: How risky is each fund, is it paid enough for that risk, how quickly could its holdings be sold, and how sensitive are its bonds to interest rates?
+built: A Python package with risk-adjusted performance measures, Value at Risk with backtesting, liquidity analysis, bond duration on the Persian calendar, and account reconciliation, plus a one-command Excel report.
+result: Replaced dozens of copy-pasted notebooks with one tested tool, and fixed real errors along the way, including a date conversion that was about 80 days off.
+skills: Market risk · fixed income · data engineering · reporting · Python · testing
+tech: Modules for metrics (Sharpe, Sortino with proper downside deviation, Treynor, Jensen's alpha), VaR/ES (historical, parametric, Monte Carlo) with rolling out-of-sample forecasts and the Kupiec test, Jalali-calendar bond cash flows, liquidity versus base volume, and reconciliation with RTL-safe account keys. Ships with synthetic data only.
+repo: fund-risk-toolkit
+tests: 37
+chartjs: true
+demo: fundrisk
+toc: [["idea", "What a fund risk report answers"], ["dashboard", "Risk dashboard"], ["bonds", "Bond calculator"], ["fixes", "Errors I fixed"], ["learned", "What I learned"]]
+---
+<h2 id="idea">What a fund risk report answers</h2>
+<p>As a risk analyst I prepared regular risk reports for the bank's mutual funds. Each one answers a few
+  simple questions for the fund managers and the compliance team:</p>
+<ul>
+  <li><strong>How much does the fund swing?</strong> Volatility, and the worst fall from a peak.</li>
+  <li><strong>Is the return worth the risk?</strong> Sharpe and Sortino ratios compare return with risk taken.</li>
+  <li><strong>How bad can a normal bad day get?</strong> Value at Risk: the loss that should be exceeded on only 1 day in 100.</li>
+  <li><strong>Can we sell if we need to?</strong> How many days it would take to sell a holding without moving its price.</li>
+  <li><strong>What if interest rates rise?</strong> The duration of the bond holdings.</li>
+</ul>
+<p>The real reports used client data, which stays confidential. The demos below run the same
+  calculations on <strong>made-up funds</strong>, or on numbers you paste in yourself.</p>
+
+<h2 id="dashboard">Risk dashboard</h2>
+<div class="demo" id="fund-demo">
+  <div class="demo-head"><h3>Fund risk dashboard</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls">
+    <div class="control"><label for="f-fund">Fund</label><select id="f-fund"></select></div>
+    <div class="control"><label for="f-conf">Confidence level <output id="f-conf-out"></output></label><input id="f-conf" type="range" min="90" max="99.5" step="0.5" value="99"></div>
+    <div class="control"><label for="f-rf">Risk-free rate (per year) <output id="f-rf-out"></output></label><input id="f-rf" type="range" min="0" max="35" step="1" value="25"></div>
+  </div>
+  <details class="paste"><summary>Or paste your own prices</summary>
+    <textarea id="f-paste" placeholder="One price per line, oldest first, at least 60 lines. For example daily closing prices copied from Excel."></textarea>
+    <button class="btn" type="button" id="f-use">Analyse my prices</button> <span class="demo-note" id="f-paste-msg"></span>
+  </details>
+  <div class="stats" id="f-stats"></div>
+  <div class="chart short"><canvas id="f-price" aria-label="Fund price over time"></canvas></div>
+  <div class="chart short"><canvas id="f-hist" aria-label="Distribution of daily returns"></canvas></div>
+  <p class="callout" id="f-read"></p>
+</div>
+
+<h2 id="bonds">Bond calculator</h2>
+<p>Bond funds are mainly exposed to interest rates. <strong>Duration</strong> says roughly how much
+  a bond's price falls, in percent, if interest rates rise by one percentage point. Iranian bonds
+  typically pay a coupon every three months on a face value of 1,000,000 rials.</p>
+<div class="demo" id="bond-demo">
+  <div class="demo-head"><h3>Bond price and interest-rate risk</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls">
+    <div class="control"><label for="b-cpn">Coupon (per year) <output id="b-cpn-out"></output></label><input id="b-cpn" type="range" min="0" max="35" step="0.5" value="23"></div>
+    <div class="control"><label for="b-mat">Years to maturity <output id="b-mat-out"></output></label><input id="b-mat" type="range" min="0.25" max="10" step="0.25" value="3"></div>
+    <div class="control"><label for="b-ytm">Market yield <output id="b-ytm-out"></output></label><input id="b-ytm" type="range" min="1" max="45" step="0.5" value="27"></div>
+    <div class="control"><label for="b-freq">Payments per year</label><select id="b-freq"><option value="4" selected>4 (every 3 months)</option><option value="2">2 (every 6 months)</option><option value="1">1 (yearly)</option></select></div>
+  </div>
+  <div class="stats" id="b-stats"></div>
+  <div class="chart short"><canvas id="b-chart" aria-label="Bond price against market yield"></canvas></div>
+  <p class="demo-note">Set the coupon to 0 for a Treasury bill (اسناد خزانه), which pays everything at maturity. Yields are effective annual rates, as quoted in the Iranian market.</p>
+</div>
+
+<h2 id="fixes">Errors I fixed</h2>
+<p>Rebuilding the notebooks as a tested package surfaced real mistakes, some of which had been
+  copied into many reports:</p>
+<ul>
+  <li><strong>Dates off by about 80 days.</strong> Persian (Jalali) dates were converted to Western dates by adding 621 to the year. The Persian year starts on 20 or 21 March, so every bond maturity was shifted, and some dates were impossible. The toolkit now converts exactly, with tests that pin known dates.</li>
+  <li><strong>Bond durations.</strong> Coupons were discounted at the coupon rate instead of the market yield, and the final repayment was timed differently from the last coupon. Durations are now computed from a proper payment schedule and checked against numerical derivatives.</li>
+  <li><strong>The Sortino ratio</strong> measured how spread out losses were rather than how large, which can make a riskier fund look safer.</li>
+  <li><strong>Reconciliation.</strong> Bank account numbers copied out of right-to-left documents came back reversed (123-456 became 456-123). The fix sorted the pieces, which could merge two different accounts; the new key only treats a reversed order as the same account.</li>
+</ul>
+
+<h2 id="learned">What I learned</h2>
+<ul>
+  <li><strong>Copy-paste is a risk.</strong> When the same calculation lives in 60 notebooks, a bug lives in 60 places. One tested function fixes it everywhere.</li>
+  <li><strong>Backtest your risk model.</strong> A VaR number means little until you check how often it was actually exceeded. The toolkit does this automatically (the Kupiec test).</li>
+  <li><strong>Local details matter.</strong> The Persian calendar, mixed Arabic and Persian characters and right-to-left text caused more real-world errors than any formula.</li>
+</ul>

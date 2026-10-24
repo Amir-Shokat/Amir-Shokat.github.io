@@ -1,0 +1,81 @@
+---
+title: Interest-Rate Risk with PCA
+order: 3
+kicker: Utrecht University · Risk Management
+thumb: pca.png
+tags: risk research
+summary: Interest rates for different maturities move in a few typical patterns. Finding those patterns makes it much easier to estimate how much a bond portfolio could lose on a bad day.
+question: What are the main ways the euro yield curve moves, and how much can a portfolio of rate positions lose in one day?
+built: A tool that extracts the curve's main movements from 22 years of ECB data, cleans out bad quotes, and compares four ways of estimating Value at Risk.
+result: Found that one day of bad data had created the strange "third factor" in the original assignment. Simple two-factor models can understate risk by about 20%.
+skills: Principal component analysis · Value at Risk · data quality checks · Python · testing
+tech: PCA on the covariance of daily basis-point changes, model-building VaR and expected shortfall with 1 to 3 factors, historical-simulation VaR, and a detector for one-day reversing quote errors that leaves market-wide moves untouched.
+repo: yield-curve-pca-var
+tests: 15
+chartjs: true
+demo: rates
+toc: [["idea", "The idea"], ["moves", "How the curve moves"], ["var", "Risk calculator"], ["data", "The bad-data story"], ["learned", "What I learned"]]
+---
+<h2 id="idea">The idea in plain words</h2>
+<p>The <strong>yield curve</strong> shows the interest rate for borrowing over 1 year, 2 years, and
+  so on up to 30 years. Banks and pension funds hold positions all along it, so they need to know:
+  <em>if rates move tomorrow, how much could we lose?</em></p>
+<p>Tracking 15 rates separately is hard. But they don't move independently: most days the whole
+  curve shifts up or down together. <strong>Principal component analysis (PCA)</strong> finds the few
+  typical movements that explain almost everything.</p>
+
+<h2 id="moves">The three ways the curve moves</h2>
+<p>Here is the euro-area yield curve on <span id="r-date">the latest date</span>. Each slider pushes it
+  along one of the three movements PCA finds in the data, by a typical daily amount (one standard
+  deviation).</p>
+
+<div class="demo" id="moves-demo">
+  <div class="demo-head"><h3>Bend the yield curve</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls">
+    <div class="control"><label for="r-f1">Level: everything up or down <output id="r-f1-out"></output></label><input id="r-f1" type="range" min="-5" max="5" step="0.5" value="0"></div>
+    <div class="control"><label for="r-f2">Slope: short vs long rates <output id="r-f2-out"></output></label><input id="r-f2" type="range" min="-5" max="5" step="0.5" value="0"></div>
+    <div class="control"><label for="r-f3">Curvature: the middle vs the ends <output id="r-f3-out"></output></label><input id="r-f3" type="range" min="-5" max="5" step="0.5" value="0"></div>
+  </div>
+  <div class="chart"><canvas id="r-curve" aria-label="Euro yield curve"></canvas></div>
+  <p class="demo-note" id="r-explained"></p>
+</div>
+
+<h2 id="var">How much could a portfolio lose?</h2>
+<p><strong>Value at Risk (VaR)</strong> answers: <em>"On 99 days out of 100, we won't lose more than
+  X."</em> Set the portfolio below: each slider is how many thousand euros the position gains
+  if that interest rate falls by 0.01 percentage point (one basis point). The calculator compares four
+  answers on 22 years of real daily data.</p>
+
+<div class="demo" id="var-demo">
+  <div class="demo-head"><h3>Portfolio risk calculator</h3><span class="demo-tag">Try it</span></div>
+  <p class="toolbar"><span class="segmented" id="r-presets">
+    <button type="button" data-p="hull" aria-pressed="true">Textbook example</button>
+    <button type="button" data-p="long" aria-pressed="false">Long-term bond fund</button>
+    <button type="button" data-p="steep" aria-pressed="false">Curve bet</button></span></p>
+  <div class="controls" id="r-exposures"></div>
+  <div class="chart short"><canvas id="r-var" aria-label="Value at Risk under four methods"></canvas></div>
+  <div class="stats" id="r-var-stats"></div>
+  <p class="callout" id="r-var-explain"></p>
+</div>
+
+<h2 id="data">The bad-data story</h2>
+<p>In the original assignment, the third movement looked odd: a sharp dip only at the 7, 8 and
+  9-year rates. While rebuilding the project I traced it to <strong>a single day</strong>:
+  on 25 May 2015, a market holiday, the data feed showed those three rates dropping by up to
+  0.84 percentage points, only to snap back the next morning. One bad day out of 4,682 was enough to
+  change the result.</p>
+<div class="demo" id="pc3-demo">
+  <div class="demo-head"><h3>Third movement, before and after removing one bad day</h3></div>
+  <div class="chart short"><canvas id="r-pc3" aria-label="Third principal component before and after cleaning"></canvas></div>
+  <p class="demo-note">EUR swap rates, 1999 to 2017 (the course data). After cleaning, the third movement has the textbook "bow" shape: short and long ends move one way, the middle the other.</p>
+</div>
+<p>The rebuilt tool finds such quotes automatically: a big move in one maturity that its neighbours
+  don't share, reversed the next day. It deliberately leaves alone big moves that the whole curve shares,
+  such as October 2008 or March 2023, because those were real.</p>
+
+<h2 id="learned">What I learned</h2>
+<ul>
+  <li><strong>Check the data before trusting the model.</strong> The most interesting result in the original work was a data error.</li>
+  <li><strong>Simple models can understate risk.</strong> For the textbook portfolio, using two movements instead of three gives a loss estimate about 20% too low, and real data has fatter tails than the normal distribution assumes.</li>
+  <li><strong>Make it reproducible.</strong> The original used licensed data; the rebuild downloads free ECB data, so anyone can check the numbers.</li>
+</ul>

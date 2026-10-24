@@ -3,122 +3,48 @@ layout: default
 title: Projects
 permalink: /projects/
 scripts: true
-description: Open-source finance projects by Amirmahdi Shokatabadi, covering trading strategies, risk models, econometric research and market data tools.
+description: Finance projects by Amirmahdi Shokatabadi, each explained in plain language with interactive demos you can try in the browser.
 ---
 <header class="page-head">
   <h1>Projects</h1>
-  <p class="lead">Each project started as a thesis, coursework or work analysis. I rebuilt them so anyone
-    can run them, fixed the errors I found in the originals, and wrote down what I learned. The
-    software packages come with unit tests.</p>
+  <p class="lead">Each project has its own page that explains it in plain language, and most come with a
+    demo you can play with right in your browser. The code is open source for anyone who wants to look under the hood.</p>
 </header>
 
-  <div class="filters" role="group" aria-label="Filter projects">
-    <button class="chip active" data-filter="all" type="button">All</button>
-    <button class="chip" data-filter="trading" type="button">Trading</button>
-    <button class="chip" data-filter="risk" type="button">Risk</button>
-    <button class="chip" data-filter="research" type="button">Research</button>
-    <button class="chip" data-filter="data" type="button">Data engineering</button>
-  </div>
+<div class="filters" role="group" aria-label="Filter projects">
+  <button class="chip active" data-filter="all" type="button">All</button>
+  <button class="chip" data-filter="risk" type="button">Risk</button>
+  <button class="chip" data-filter="research" type="button">Research</button>
+  <button class="chip" data-filter="trading" type="button">Trading</button>
+  <button class="chip" data-filter="data" type="button">Data</button>
+</div>
 
-  <div class="grid">
-    <article class="card" id="p-thesis" data-tags="research">
-      <img src="{{ '/assets/img/' | relative_url }}thesis.png" alt="Forest plot of corrected temperature-anomaly coefficients for returns and volatility; all 95% intervals include zero" loading="lazy">
-      <div class="card-body">
-        <p class="kicker">MSc thesis · Utrecht University</p>
-        <h3>Warming Trends: Replication &amp; Audit</h3>
-        <p>A reproducible rebuild of my thesis: firm-level returns and volatility for about 18,000 US firms matched to PRISM temperature anomalies at each headquarters, with fixed-effects regressions and two-way clustered errors.</p>
-        <p class="finding"><b>Found:</b> the original matched weather to firms by city name only, so 45% of firm-months got another town's weather. Once that is corrected, there is no detectable temperature effect.</p>
-        <ul class="tags"><li>Panel data</li><li>Climate finance</li><li>Replication</li></ul>
-        <a class="more" href="https://github.com/Amir-Shokat/warming-trends-replication" rel="noopener">View repository →</a>
-      </div>
-    </article>
-
-    <article class="card" id="p-fund-risk" data-tags="risk data">
-      <img src="{{ '/assets/img/' | relative_url }}fundrisk.png" alt="Bar chart of 1-day historical VaR by holding" loading="lazy">
-      <div class="card-body">
-        <p class="kicker">Work · Python package</p>
-        <h3>Fund Risk Toolkit</h3>
-        <p>The reusable core of 60+ fund-reporting notebooks: risk-adjusted performance, VaR/ES with a Kupiec backtest, liquidity versus base volume, Jalali-calendar bond duration and account reconciliation.</p>
-        <p class="finding"><b>Fixed:</b> a date conversion that was about 80 days off, and bond durations discounted at the coupon rate.</p>
-        <ul class="tags"><li>VaR</li><li>Duration</li><li>Reconciliation</li><li>37 tests</li></ul>
-        <a class="more" href="https://github.com/Amir-Shokat/fund-risk-toolkit" rel="noopener">View repository →</a>
-      </div>
-    </article>
-
-    <article class="card" data-tags="risk research">
-      <img src="{{ '/assets/img/' | relative_url }}pca.png" alt="Level, slope and curvature factor loadings of the euro yield curve" loading="lazy">
-      <div class="card-body">
-        <p class="kicker">Utrecht University · Risk Management</p>
-        <h3>Yield-Curve PCA &amp; Interest-Rate VaR</h3>
-        <p>PCA of daily euro yield-curve moves and VaR for a swap portfolio, comparing 1, 2 and 3-factor models with historical simulation, on public ECB data.</p>
-        <p class="finding"><b>Found:</b> one bad day of quotes had created the "third factor" in the original assignment. A two-factor model understates VaR by about 20%.</p>
-        <ul class="tags"><li>PCA</li><li>VaR / ES</li><li>Data quality</li></ul>
-        <a class="more" href="https://github.com/Amir-Shokat/yield-curve-pca-var" rel="noopener">View repository →</a>
-      </div>
-    </article>
-
-    <article class="card" data-tags="trading">
-      <img src="{{ '/assets/img/' | relative_url }}options.png" alt="Portfolio delta, PnL and positions of the options market maker" loading="lazy">
-      <div class="card-body">
-        <p class="kicker">Utrecht University · Algorithms in Finance</p>
-        <h3>Options Market Making</h3>
-        <p>A Black-Scholes market maker with inventory-aware quoting and delta hedging across two listings, plus a simulated options exchange so the bot runs without Optiver's private platform.</p>
-        <p class="finding"><b>Result:</b> 2nd place in the course's Optiver competition (team of five).</p>
-        <ul class="tags"><li>Greeks</li><li>Market making</li><li>53 tests</li></ul>
-        <a class="more" href="https://github.com/Amir-Shokat/options-market-making" rel="noopener">View repository →</a>
-      </div>
-    </article>
-
-    <article class="card" data-tags="trading">
-      <img src="{{ '/assets/img/' | relative_url }}pairs.png" alt="Spread, positions and PnL of the pairs-trading backtest" loading="lazy">
-      <div class="card-body">
-        <p class="kicker">Utrecht University · Algorithms in Finance</p>
-        <h3>Pairs Trading with Cointegration</h3>
-        <p>Engle-Granger pair screening and a bid/ask-aware spread strategy with adaptive thresholds, hedge-ratio checks and position limits, backtested on a simulated order book.</p>
-        <p class="finding"><b>Fixed:</b> the second leg is now sized on actual fills, and the bot no longer trades on noise at start-up.</p>
-        <ul class="tags"><li>Cointegration</li><li>Stat-arb</li><li>17 tests</li></ul>
-        <a class="more" href="https://github.com/Amir-Shokat/pairs-trading-cointegration" rel="noopener">View repository →</a>
-      </div>
-    </article>
-
-    <article class="card" data-tags="research">
-      <img src="{{ '/assets/img/' | relative_url }}gpr.png" alt="Geopolitical risk index with Bitcoin and gold performance" loading="lazy">
-      <div class="card-body">
-        <p class="kicker">Utrecht University · FinTech</p>
-        <h3>Is Bitcoin the New Gold?</h3>
-        <p>Regressions of Bitcoin and gold returns and volatility on the Caldara-Iacoviello Geopolitical Risk index, with macro controls, HAC errors and robustness checks. Fully reproducible from public data.</p>
-        <p class="finding"><b>Found:</b> Bitcoin is no geopolitical hedge; gold reacts only with a one-day lag.</p>
-        <ul class="tags"><li>Econometrics</li><li>Time series</li><li>Reproducible</li></ul>
-        <a class="more" href="https://github.com/Amir-Shokat/bitcoin-gold-geopolitical-risk" rel="noopener">View repository →</a>
-      </div>
-    </article>
-
-    <article class="card" data-tags="research">
-      <img src="{{ '/assets/img/' | relative_url }}sentiment.png" alt="Polarity of news articles over time" loading="lazy">
-      <div class="card-body">
-        <p class="kicker">Utrecht University · Text Mining</p>
-        <h3>News Sentiment &amp; Media Bias</h3>
-        <p>Did CNBC cover Donald Trump in a different tone? Article and sentence-level sentiment, significance tests, bootstrap intervals and TF-IDF similarity, for any term and any news CSV.</p>
-        <p class="finding"><b>Found:</b> no difference in tone (p = 0.94), but slightly less subjective language (p = 0.02).</p>
-        <ul class="tags"><li>NLP</li><li>Hypothesis tests</li></ul>
-        <a class="more" href="https://github.com/Amir-Shokat/news-sentiment-analysis" rel="noopener">View repository →</a>
-      </div>
-    </article>
-
-    <article class="card" id="p-tehran-data" data-tags="data">
+{% assign projects = site.projects | sort: "order" %}
+<div class="grid">
+  {% for p in projects %}
+  <article class="card" data-tags="{{ p.tags }}">
+    <a class="card-link" href="{{ p.url | relative_url }}" aria-label="{{ p.title }}">
+      {% if p.thumb and p.thumb != "" %}
+      <img src="{{ '/assets/img/' | append: p.thumb | relative_url }}" alt="" loading="lazy">
+      {% else %}
       <div class="card-art" aria-hidden="true">
         <svg viewBox="0 0 320 150">
           <g class="edges"><line x1="70" y1="40" x2="160" y2="75"/><line x1="70" y1="110" x2="160" y2="75"/><line x1="250" y1="35" x2="160" y2="75"/><line x1="250" y1="115" x2="160" y2="75"/><line x1="250" y1="115" x2="200" y2="135"/><line x1="70" y1="110" x2="110" y2="138"/><line x1="250" y1="35" x2="290" y2="75"/></g>
           <circle class="hub" cx="160" cy="75" r="16"/><circle class="n" cx="70" cy="40" r="8"/><circle class="n" cx="70" cy="110" r="8"/><circle class="n" cx="250" cy="35" r="8"/><circle class="n" cx="250" cy="115" r="8"/><circle class="n" cx="200" cy="135" r="6"/><circle class="n" cx="110" cy="138" r="6"/><circle class="n" cx="290" cy="75" r="6"/>
         </svg>
       </div>
-      <div class="card-body">
-        <p class="kicker">Work · Python package</p>
-        <h3>Tehran Market Data</h3>
-        <p>Tested clients for TSETMC prices, base volume and shareholder panels, the FIPIRAN fund registry and the Mabna instrument database, plus a daily panel of every Iranian mutual fund and a network of 505 funds and the firms behind them.</p>
-        <p class="finding"><b>Found:</b> five guarantors back two thirds of all fund assets.</p>
-        <ul class="tags"><li>APIs</li><li>Fund panel</li><li>27 tests</li></ul>
-        <a class="more" href="https://github.com/Amir-Shokat/tehran-market-data" rel="noopener">View repository →</a>
-      </div>
-    </article>
-  </div>
+      {% endif %}
+    </a>
+    <div class="card-body">
+      <p class="kicker">{{ p.kicker }}</p>
+      <h2 class="card-title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
+      <p>{{ p.summary }}</p>
+      <p class="finding"><b>Finding:</b> {{ p.result }}</p>
+      <p class="card-actions">
+        <a class="more" href="{{ p.url | relative_url }}">{% if p.demo %}Read &amp; try it →{% else %}Read more →{% endif %}</a>
+        <a class="code-link" href="https://github.com/Amir-Shokat/{{ p.repo }}" rel="noopener">Code</a>
+      </p>
+    </div>
+  </article>
+  {% endfor %}
+</div>

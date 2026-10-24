@@ -1,0 +1,73 @@
+---
+title: Pairs Trading with Cointegration
+order: 5
+kicker: Utrecht University · Algorithms in Finance
+thumb: pairs.png
+tags: trading
+summary: Two stocks that usually move together sometimes drift apart for a while. This strategy bets on them coming back together, and hedges away the rest of the market's ups and downs.
+question: Which stocks are truly tied together in the long run, and can we trade their temporary gaps profitably after costs?
+built: A statistical test that finds tied pairs, a trading rule that only acts when a gap survives the bid-ask spread, position limits and hedge checks, and a simulated exchange to test it.
+result: The strategy earns steadily while the relationship holds. The rewrite fixed a start-up bug that traded on noise and a hedge that was sized on orders instead of actual fills.
+skills: Time-series econometrics · cointegration testing · trading-system design · Python · testing
+tech: Engle-Granger two-step estimation with MacKinnon critical values, executable bid/ask spread signals with a rolling volatility threshold, fill-aware hedge sizing and a simulated limit-order book, all covered by unit tests.
+repo: pairs-trading-cointegration
+tests: 17
+chartjs: true
+demo: pairs
+toc: [["idea", "The idea"], ["test", "Finding pairs"], ["try", "Try the strategy"], ["risk", "The risk"], ["learned", "What I learned"]]
+---
+<h2 id="idea">The idea in plain words</h2>
+<p>Think of two coffee chains in the same city. Their share prices react to the same news (coffee
+  prices, consumer spending, interest rates), so they tend to move together. Sometimes one runs
+  ahead for a few days for no lasting reason. A pairs trader <strong>sells the one that ran ahead and
+  buys the one that lagged</strong>, and closes the trade when the gap closes.</p>
+<p>Because the trader is long one stock and short the other, a market-wide rise or fall mostly cancels
+  out. The bet is only on the <em>gap</em>.</p>
+
+<h2 id="test">Step 1: are the two stocks really tied together?</h2>
+<p>Two prices can look related on a chart by pure chance. The statistical test used here,
+  <strong>cointegration</strong>, asks a sharper question: <em>does the gap between them keep pulling
+  back to its normal level?</em> If it does, the gap is tradable. If it wanders off and never comes
+  back, it isn't.</p>
+<div class="callout">In the course, every pair of stocks on the exchange was tested. Only two passed at
+  the strict 1% level (NVIDIA with Cisco, and ING with Santander), and those were the only pairs the
+  bot traded. On real daily data, NVIDIA and Cisco are <strong>not</strong> tied together
+  (p = 0.87), so the code warns you before trading a pair that fails the test.</div>
+
+<h2 id="try">Step 2: try the strategy</h2>
+<p>Below, two stocks are simulated so that their gap pulls back towards normal. The strategy studies the
+  first 150 days to learn what a "normal" gap looks like, then trades the remaining days: it
+  <strong>sells the gap</strong> when it is unusually wide and <strong>buys it</strong> when it is
+  unusually narrow. Change the settings and watch the result.</p>
+
+<div class="demo" id="pairs-demo">
+  <div class="demo-head"><h3>Pairs trading simulator</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls">
+    <div class="control"><label for="p-hl">How fast the gap closes <output id="p-hl-out"></output></label><input id="p-hl" type="range" min="2" max="60" step="1" value="6"></div>
+    <div class="control"><label for="p-k">Trade when the gap is wider than <output id="p-k-out"></output></label><input id="p-k" type="range" min="0.25" max="2.5" step="0.25" value="1"></div>
+    <div class="control"><label for="p-cost">Trading cost per trade <output id="p-cost-out"></output></label><input id="p-cost" type="range" min="0" max="30" step="1" value="5"></div>
+    <div class="control wide"><label>When to close a trade</label>
+      <div class="segmented" id="p-exit"><button type="button" data-v="flip" aria-pressed="true">At the opposite extreme</button><button type="button" data-v="mean" aria-pressed="false">When the gap is normal again</button></div></div>
+  </div>
+  <p class="toolbar"><button class="btn ghost" type="button" id="p-new">New random market</button>
+    <label class="check"><input type="checkbox" id="p-break"> Break the relationship halfway</label></p>
+  <div class="stats" id="p-stats"></div>
+  <div class="chart"><canvas id="p-spread" aria-label="The gap between the two stocks with trading bands"></canvas></div>
+  <div class="chart short"><canvas id="p-pnl" aria-label="Cumulative profit"></canvas></div>
+  <p class="demo-note">Profit is shown per €10,000 traded on each side. The shaded area is the 150-day learning period, when no trades are made. Green dots mark buying the gap, orange dots selling it.</p>
+</div>
+
+<h2 id="risk">The risk: relationships break</h2>
+<p>Tick <em>Break the relationship halfway</em> in the simulator. From day 300 the gap no longer pulls
+  back, as can happen after a merger, a scandal or a change in one company's business. The strategy
+  keeps betting on a return that never comes, and losses pile up.</p>
+<p>That's why the real bot had strict risk limits: a maximum position of 100 shares per stock, and an
+  automatic close-out if the two legs of a trade drifted more than 20% away from the intended hedge
+  ratio.</p>
+
+<h2 id="learned">What I learned</h2>
+<ul>
+  <li><strong>Test before you trust a pattern.</strong> Many pairs "look" related but fail a proper statistical test.</li>
+  <li><strong>Costs decide everything.</strong> Push the trading cost slider up: a strategy that trades too often can turn a good signal into a loss.</li>
+  <li><strong>Execution details matter.</strong> In the original version the second leg of each trade was sized on the order, not on what actually got filled, which could leave a position unhedged. The rebuild sizes it on real fills.</li>
+</ul>

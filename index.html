@@ -47,8 +47,8 @@ title: Home
   <h2>Where to next?</h2>
   <ul>
     <li><a href="{{ '/cv/' | relative_url }}"><strong>CV</strong><span>Market risk, return measurement and product work, plus my studies.</span></a></li>
-    <li><a href="{{ '/projects/' | relative_url }}"><strong>Projects</strong><span>Trading bots, risk models and research code, all open source.</span></a></li>
-    <li><a href="{{ '/research/' | relative_url }}"><strong>Research</strong><span>Do hot months move stock prices? My thesis, rebuilt and audited.</span></a></li>
+    <li><a href="{{ '/projects/' | relative_url }}"><strong>Projects</strong><span>Eight projects, each explained in plain words, most with a demo you can try.</span></a></li>
+    <li><a href="{{ '/projects/warming-trends/' | relative_url }}"><strong>My thesis</strong><span>Do hot months move stock prices? Rebuilt, audited and corrected.</span></a></li>
     {% assign latest = site.posts | first %}
     <li><a href="{% if latest %}{{ latest.url | relative_url }}{% else %}{{ '/interests/' | relative_url }}{% endif %}"><strong>Latest post</strong><span>{% if latest %}{{ latest.title }}{% else %}Coming soon.{% endif %}</span></a></li>
   </ul>

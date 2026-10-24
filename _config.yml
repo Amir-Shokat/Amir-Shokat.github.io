@@ -14,7 +14,23 @@ kramdown:
 permalink: /posts/:year/:title/
 timezone: Europe/Amsterdam
 
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+
+plugins:
+  - jekyll-sitemap
+
 exclude:
   - README.md
   - LICENSE
   - POSTING.md
+  - _tools

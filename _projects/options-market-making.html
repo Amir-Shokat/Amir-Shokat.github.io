@@ -1,0 +1,94 @@
+---
+title: Options Market Making
+order: 4
+kicker: Utrecht University · Algorithms in Finance
+thumb: options.png
+tags: trading
+summary: A trading bot that stands ready to both buy and sell options all day, earns the small gap between the two prices, and keeps its risk close to zero by trading the underlying stock.
+question: Can an automated market maker quote fair option prices, earn the bid-ask spread and stay hedged against the stock moving?
+built: A Black-Scholes pricing engine, inventory-aware quoting rules and a delta-hedging loop, plus a simulated exchange so it can run anywhere.
+result: Our team finished 2nd in the course's Optiver trading competition. The rewrite fixed a quote that could be set above fair value and a sizing bug.
+skills: Option pricing and Greeks · risk hedging · algorithm design · Python · testing
+tech: Python package with a Black-Scholes module (prices, delta, gamma, vega; checked against finite differences and put-call parity), quoting and hedging modules, and a simulated exchange that mirrors Optiver's Optibook interface.
+repo: options-market-making
+tests: 53
+chartjs: true
+demo: options
+toc: [["idea", "The idea"], ["price", "Pricing an option"], ["quote", "Quoting"], ["hedge", "Hedging"], ["learned", "What I learned"]]
+---
+<h2 id="idea">The idea in plain words</h2>
+<p>A <strong>market maker</strong> is like a currency exchange booth at an airport: it always shows a
+  price to buy and a slightly higher price to sell. It doesn't try to guess where prices go next.
+  It earns the small difference between the two prices, many times a day.</p>
+<p>In this course project, five of us built a market maker for <strong>options</strong>, contracts
+  that give the right to buy (a <em>call</em>) or sell (a <em>put</em>) a stock at a fixed price later.
+  The bot ran live on Optiver's training exchange against other teams' bots, and we finished
+  <strong>second</strong>.</p>
+<p>Three things had to work at the same time:</p>
+<ol>
+  <li><strong>Price</strong> each option fairly, every few seconds, as the stock moves.</li>
+  <li><strong>Quote</strong> buy and sell prices around that fair value without being picked off.</li>
+  <li><strong>Hedge</strong>: trade the stock to cancel the risk that the options pick up.</li>
+</ol>
+
+<h2 id="price">Step 1: what is an option worth?</h2>
+<p>The bot uses the Black-Scholes formula, the classic model for pricing options. Move the sliders
+  to see how the value reacts. The thin line shows what the option pays at expiry, and the thick line
+  shows what it's worth today, while there's still time for the stock to move.</p>
+
+<div class="demo" id="bs-demo">
+  <div class="demo-head"><h3>Option price calculator</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls">
+    <div class="control wide"><label>Option type</label>
+      <div class="segmented" id="bs-kind"><button type="button" data-v="call" aria-pressed="true">Call (right to buy)</button><button type="button" data-v="put" aria-pressed="false">Put (right to sell)</button></div></div>
+    <div class="control"><label for="bs-s">Stock price <output id="bs-s-out"></output></label><input id="bs-s" type="range" min="60" max="140" step="1" value="100"></div>
+    <div class="control"><label for="bs-k">Strike price <output id="bs-k-out"></output></label><input id="bs-k" type="range" min="60" max="140" step="1" value="100"></div>
+    <div class="control"><label for="bs-t">Days to expiry <output id="bs-t-out"></output></label><input id="bs-t" type="range" min="1" max="365" step="1" value="90"></div>
+    <div class="control"><label for="bs-v">Volatility (how jumpy the stock is) <output id="bs-v-out"></output></label><input id="bs-v" type="range" min="5" max="100" step="1" value="30"></div>
+    <div class="control"><label for="bs-r">Interest rate <output id="bs-r-out"></output></label><input id="bs-r" type="range" min="0" max="10" step="0.25" value="3"></div>
+  </div>
+  <div class="stats" id="bs-stats"></div>
+  <div class="chart"><canvas id="bs-chart" aria-label="Option value against stock price"></canvas></div>
+  <p class="demo-note"><b>Delta</b>: how much the option moves when the stock moves by 1. <b>Gamma</b>: how fast delta itself changes. <b>Vega</b>: how much value is added if volatility rises by one percentage point. <b>Theta</b>: value lost per day as time passes.</p>
+</div>
+
+<h2 id="quote">Step 2: quoting without getting hurt</h2>
+<p>Knowing the fair value isn't enough. The bot needs a <em>bid</em> (the price it buys at) and an
+  <em>ask</em> (the price it sells at). The rules we settled on:</p>
+<ul>
+  <li>Improve the best price in the market by one tick (0.10) to be first in line, but <strong>never cross fair value</strong>. Buying above what something is worth loses money on every trade.</li>
+  <li>If the bot already owns too many options (above 60 of the limit of 100), it stops competing to buy and makes its sell price attractive, so the extra inventory is sold off. The opposite applies when it owes too many.</li>
+  <li>Trade more when the market's prices are far from fair value: 30 options per tick of edge, up to 100.</li>
+</ul>
+
+<div class="demo" id="quote-demo">
+  <div class="demo-head"><h3>Be the market maker</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls">
+    <div class="control"><label for="q-fair">Fair value from the model <output id="q-fair-out"></output></label><input id="q-fair" type="range" min="36.1" max="37.5" step="0.05" value="36.8"></div>
+    <div class="control"><label for="q-inv">Options I currently hold <output id="q-inv-out"></output></label><input id="q-inv" type="range" min="-100" max="100" step="5" value="0"></div>
+  </div>
+  <p class="demo-note">Other traders are bidding <b>36.40</b> and asking <b>37.20</b>.</p>
+  <div class="quote-grid">
+    <div class="ladder" id="q-ladder" aria-live="polite"></div>
+    <p class="callout" id="q-explain"></p>
+  </div>
+</div>
+
+<h2 id="hedge">Step 3: hedging away the risk</h2>
+<p>Every option the bot trades makes it slightly exposed to the stock price. The exposure is
+  measured by <em>delta</em>: holding 10 calls with a delta of 0.6 is like holding 6 shares. After each
+  round of quotes, the bot adds up the delta of all its options and buys or sells shares to bring the
+  total back to zero.</p>
+<p>When the main stock listing hit its trading limit, the bot switched to a second, less liquid
+  listing of the same stock, which doubled its hedging capacity.</p>
+<figure class="figure">
+  <img src="{{ '/assets/img/options.png' | relative_url }}" alt="Simulation: delta stays near zero, profit grows steadily, positions move between limits" loading="lazy">
+  <figcaption>Simulation from the rebuilt bot. Top: total risk (delta) stays near zero. Middle: profit builds up from the spread. Bottom: positions keep turning over without getting stuck at the limits.</figcaption>
+</figure>
+
+<h2 id="learned">What I learned</h2>
+<ul>
+  <li><strong>The model is only as good as its inputs.</strong> In the simulation, if the bot prices with the wrong volatility, its quotes sit on the wrong side of the market and the profit disappears.</li>
+  <li><strong>Small rules matter.</strong> When I rebuilt the code I found a quote that could be placed <em>above</em> fair value, a guaranteed loss, and a size calculation that read the same price twice. Both are fixed and covered by tests now.</li>
+  <li><strong>Risk control is the product.</strong> Earning the spread is easy; earning it without building up a big one-sided position is the hard part.</li>
+</ul>

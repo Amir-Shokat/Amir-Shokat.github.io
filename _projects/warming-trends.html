@@ -1,0 +1,66 @@
+---
+title: "Warming Trends: Does Weather Move Stock Prices?"
+order: 2
+kicker: MSc thesis · Utrecht University
+thumb: thesis.png
+tags: research
+summary: My master's thesis asked whether unusually hot or cold months at a company's headquarters show up in its stock returns. Later I rebuilt the whole study from scratch, found a data problem in my own work, and corrected it.
+question: Are temperature anomalies at a firm's headquarters priced into its stock returns or volatility?
+built: A panel of about 18,000 US firms from 1995 to 2024 matched to local monthly temperatures, fixed-effects regressions with two-way clustered errors, and a full audit and rebuild of the original pipeline.
+result: Once weather is matched to the right town, there is no detectable temperature effect on returns or volatility. A less exciting headline, but the right one.
+skills: Panel econometrics · large-scale data engineering · research integrity · Python
+tech: A nine-step Python pipeline (Compustat, PRISM climate data, Simplemaps cities) with a custom high-dimensional fixed-effects OLS and Cameron-Gelbach-Miller two-way clustering, validated against the thesis data, plus Benjamini-Hochberg multiple-testing control.
+repo: warming-trends-replication
+chartjs: true
+demo: thesis
+toc: [["idea", "The question"], ["data", "The data"], ["audit", "Checking my own work"], ["results", "Results"], ["learned", "What I learned"]]
+---
+<h2 id="idea">The question</h2>
+<p>Hot summers and cold snaps affect how people work and how companies operate: factories slow
+  down, energy bills rise, people stay home. If investors notice, a company's stock should react
+  when its home city has an unusually hot or cold month. My thesis tested whether it does.</p>
+
+<h2 id="data">The data</h2>
+<ul>
+  <li><strong>Stock returns and volatility</strong> for about 18,000 US-listed companies, month by month from 1995 to 2024: almost two million firm-months.</li>
+  <li><strong>Local weather</strong> from the PRISM climate dataset: monthly temperature and rainfall at each company's headquarters, compared with that place's usual weather for the same month.</li>
+  <li><strong>Regressions</strong> that compare each firm with itself over time, and firms in the same industry in the same month with each other, so national news and seasons don't get mistaken for weather effects.</li>
+</ul>
+
+<h2 id="audit">Checking my own work</h2>
+<p>After graduating, I rebuilt the entire pipeline from the raw downloads, to make it reproducible
+  and to check it. The rebuild reproduced the thesis tables exactly, and then showed what was wrong.</p>
+<div class="callout warm"><strong>The Springfield problem.</strong> The original code matched each company to
+  weather data using only the <em>city name</em>. But the US has Springfields in about 30 states, a
+  Portland in both Oregon and Maine, and so on. About one in three US city names is shared.</div>
+
+<div class="demo" id="match-demo">
+  <div class="demo-head"><h3>How often did a company get the right town's weather?</h3></div>
+  <div class="chart short"><canvas id="t-match" aria-label="Share of firm-months matched to the right location"></canvas></div>
+  <p class="demo-note">Firm-months in the original thesis data. "Wrong town" means the company was given the weather of another place with the same name.</p>
+</div>
+<p>The audit found more issues: temperature highs and lows were compared with the wrong baseline,
+  stock splits looked like crashes because unadjusted prices were used, and taking absolute values threw
+  away whether a month was hotter or colder than usual. Each one is documented, with evidence, in the
+  repository's audit file.</p>
+
+<h2 id="results">Results after the corrections</h2>
+<div class="demo" id="effects-demo">
+  <div class="demo-head"><h3>Effect of one degree of unusual warmth</h3><span class="demo-tag">Explore</span></div>
+  <p class="toolbar"><span class="segmented" id="t-outcome">
+    <button type="button" data-v="ret_w" aria-pressed="true">On monthly returns</button>
+    <button type="button" data-v="sd_w" aria-pressed="false">On volatility</button></span></p>
+  <div class="chart short"><canvas id="t-effects" aria-label="Estimated effects with 95% confidence intervals"></canvas></div>
+  <p class="callout" id="t-read"></p>
+</div>
+<p>Every confidence range includes zero, also with the thesis's original, looser model and in all
+  robustness checks: one-quarter lags, warmer versus cooler regions, different industry groupings
+  and a fixed climate baseline. The honest conclusion: <strong>with correctly matched data, temperature
+  anomalies at headquarters do not detectably move stock returns or volatility.</strong></p>
+
+<h2 id="learned">What I learned</h2>
+<ul>
+  <li><strong>Audit your own work like a reviewer would.</strong> The most valuable result here is a corrected one.</li>
+  <li><strong>Joins are where data goes wrong.</strong> A merge on the wrong key raised no error and produced believable numbers. Only a validation step against an independent source caught it.</li>
+  <li><strong>Null results are results.</strong> Showing that an effect isn't there, with a design that would have found it, is useful knowledge.</li>
+</ul>

@@ -1,0 +1,47 @@
+---
+layout: default
+---
+{% assign projects = site.projects | sort: "order" %}
+<article class="project">
+  <p class="crumbs"><a href="{{ '/projects/' | relative_url }}">← All projects</a></p>
+  <p class="kicker">{{ page.kicker }}</p>
+  <h1>{{ page.title }}</h1>
+  <p class="standfirst">{{ page.summary }}</p>
+
+  <dl class="glance">
+    <div><dt>The question</dt><dd>{{ page.question }}</dd></div>
+    <div><dt>What I built</dt><dd>{{ page.built }}</dd></div>
+    <div><dt>What I found</dt><dd>{{ page.result }}</dd></div>
+    <div><dt>Skills shown</dt><dd>{{ page.skills }}</dd></div>
+  </dl>
+
+  {% if page.toc %}
+  <nav class="toc" aria-label="On this page">
+    {% for item in page.toc %}<a href="#{{ item[0] }}">{{ item[1] }}</a>{% endfor %}
+  </nav>
+  {% endif %}
+
+  <div class="project-body">
+    {{ content }}
+  </div>
+
+  <aside class="tech">
+    <h2>For the technical reader</h2>
+    <p>{{ page.tech }}</p>
+    <p class="links">
+      <a href="https://github.com/Amir-Shokat/{{ page.repo }}" rel="noopener">Code on GitHub ↗</a>
+      {% if page.tests %}<span class="badge">{{ page.tests }} automated tests</span>{% endif %}
+    </p>
+  </aside>
+
+  <nav class="pager" aria-label="More projects">
+    {% for p in projects %}{% if p.url == page.url %}
+      {% assign i = forloop.index0 %}
+      {% assign pi = i | minus: 1 %}{% if i > 0 %}{% assign prev = projects[pi] %}<a class="prev" href="{{ prev.url | relative_url }}"><span>Previous</span>{{ prev.title }}</a>{% else %}<span></span>{% endif %}
+      {% assign n = i | plus: 1 %}{% if n < projects.size %}{% assign next = projects[n] %}<a class="next" href="{{ next.url | relative_url }}"><span>Next</span>{{ next.title }}</a>{% endif %}
+    {% endif %}{% endfor %}
+  </nav>
+</article>
+{% if page.chartjs %}<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>{% endif %}
+<script src="{{ '/assets/js/charts.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+{% if page.demo %}<script src="{{ '/assets/js/demos/' | append: page.demo | append: '.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>{% endif %}

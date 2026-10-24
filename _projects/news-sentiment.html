@@ -1,0 +1,70 @@
+---
+title: Is News Coverage Biased?
+order: 7
+kicker: Utrecht University · Text Mining
+thumb: sentiment.png
+tags: research
+summary: Did a major financial news site write about Donald Trump in a more negative (or positive) tone than about everything else? I measured the tone of 380 articles and tested the difference properly.
+question: Is the tone of articles that mention Trump different from the tone of other articles on the same site?
+built: A text-mining pipeline that cleans articles, scores the tone of each article and of each sentence that mentions a person, and tests whether two groups really differ.
+result: No difference in tone. Articles about Trump were slightly less subjective, which fits political reporting. The original "the articles are very similar" claim did not hold up.
+skills: Natural language processing · hypothesis testing · data cleaning · Python
+tech: TextBlob sentiment at article and sentence level, whole-word mention detection, Welch's t-test, Mann-Whitney U and bootstrap confidence intervals, and TF-IDF cosine similarity instead of a quadratic spaCy loop.
+repo: news-sentiment-analysis
+tests: 12
+chartjs: true
+demo: sentiment
+toc: [["idea", "The question"], ["score", "How tone is measured"], ["results", "Results"], ["learned", "What I learned"]]
+---
+<h2 id="idea">The question</h2>
+<p>Media bias is a hot topic, but claims about it are often based on a few examples. This project
+  measures it: take every article in a sample of 380 CNBC news stories from 2006 to 2021, measure the
+  tone of each one, and compare the 52 articles that mention Trump with the rest.</p>
+
+<h2 id="score">How tone is measured</h2>
+<p>The tone score works like a dictionary: each word has a value from very negative (−1) to very
+  positive (+1). <em>"Excellent"</em> scores high, <em>"terrible"</em> low, and most words are neutral.
+  Words like <em>"very"</em> strengthen the next word, and <em>"not"</em> flips it. The article's tone
+  is the average. Try it on any sentence:</p>
+
+<div class="demo" id="score-demo">
+  <div class="demo-head"><h3>Score a headline yourself</h3><span class="demo-tag">Try it</span></div>
+  <textarea id="s-text" aria-label="Text to score">Stocks rallied on strong earnings, a very good day for investors.</textarea>
+  <p class="toolbar">
+    <span class="segmented" id="s-examples">
+      <button type="button" aria-pressed="false" data-t="The company reported terrible losses and the outlook is not good.">Bad news</button>
+      <button type="button" aria-pressed="false" data-t="Markets were mixed as investors waited for the jobs report.">Neutral</button>
+      <button type="button" aria-pressed="false" data-t="This quarter is not bad at all!">Tricky</button>
+    </span>
+  </p>
+  <div class="sentiment-meter" aria-hidden="true"><i id="s-needle" style="left:50%"></i></div>
+  <div class="meter-scale"><span>Very negative</span><span>Neutral</span><span>Very positive</span></div>
+  <div class="stats" id="s-stats"></div>
+  <div class="word-chips" id="s-words"></div>
+  <p class="demo-note">A JavaScript port of TextBlob, the tool used in the study, with the same word list and rules for "very", "not" and "!". On 300 test sentences from the articles it gives exactly the same score as TextBlob 98% of the time.</p>
+</div>
+
+<div class="callout warm"><strong>Its limits:</strong> a general dictionary doesn't understand finance or
+  politics. "Shares crashed" and "a tariff war" are obviously bad news to a reader, but many such words
+  are neutral in the dictionary. That's why the study compares <em>groups</em> of articles scored the
+  same way, instead of reading much into one score.</div>
+
+<h2 id="results">Results</h2>
+<div class="demo" id="results-demo">
+  <div class="demo-head"><h3>Tone of every article over time</h3><span class="demo-tag">Explore</span></div>
+  <div class="chart tall"><canvas id="s-scatter" aria-label="Tone of each article over time"></canvas></div>
+  <p class="demo-note">Each dot is one article. Orange dots mention Trump. Most articles sit slightly above zero: business news is mildly positive on average.</p>
+  <div class="table-wrap"><table class="data-table" id="s-table"></table></div>
+</div>
+<ul>
+  <li><strong>Tone:</strong> the two groups are practically identical, also when only articles from June 2015 onwards (the start of his campaign) are compared.</li>
+  <li><strong>Subjectivity:</strong> articles that mention Trump use slightly <em>less</em> opinionated language, and this difference is statistically significant. These are mostly political and policy reports, which are written more factually than market commentary.</li>
+  <li><strong>Sentences about Trump himself</strong> are close to neutral on average (<span id="s-target"></span>).</li>
+</ul>
+
+<h2 id="learned">What I learned</h2>
+<ul>
+  <li><strong>Two averages aren't a finding.</strong> The original assignment compared two numbers by eye. Adding significance tests and confidence intervals is what turns it into evidence.</li>
+  <li><strong>Pick measures that can disagree with you.</strong> The original claimed the Trump articles were "very similar" based on a similarity score that is high for almost any two long texts. A better measure (TF-IDF) showed they're not.</li>
+  <li><strong>Be clear about what a tool can't do.</strong> Dictionary sentiment is a blunt instrument; next steps would be comparing several politicians and using a finance-trained language model.</li>
+</ul>

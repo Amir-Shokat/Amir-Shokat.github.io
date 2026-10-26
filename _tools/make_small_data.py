@@ -10,6 +10,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tehran-market-data" / "src"))
 from tehran_data import flatten_funds, manager_concentration  # noqa: E402
+from firm_names import english  # noqa: E402
 
 thesis, fundrisk, snapshot = map(Path, sys.argv[1:4])
 out = Path(__file__).resolve().parents[1] / "assets" / "data"
@@ -51,11 +52,11 @@ for role in ("manager", "guarantor"):
     summary[role] = {"firms": int(len(table)), "hhi": round(hhi), "top5": round(float(table["share"].head(5).sum()), 4),
                      # shares above are of the assets of funds that report this role; coverage says how much that is
                      "coverage_funds": int(has.sum()), "coverage_assets": round(float(funds.loc[has, "netAsset"].sum() / funds["netAsset"].sum()), 4),
-                     "top": [{"name": n, "funds": int(r.funds), "share": round(float(r.share), 4)} for n, r in table.head(10).iterrows()]}
+                     "top": [{"name": english(n), "funds": int(r.funds), "share": round(float(r.share), 4)} for n, r in table.head(10).iterrows()]}
 nodes = [{"id": f"f{i}", "type": "fund", "name": r["name"], "assets": float(r["netAsset"]), "guarantor": r["guarantor"]}
          for i, r in funds.reset_index(drop=True).iterrows()]
 json.dump({"date": snap_date, "n_funds": int(len(funds)), "total_assets": float(funds["netAsset"].sum()),
-           "summary": summary, "funds": [{"a": round(n["assets"] / 1e10), "g": n["guarantor"]} for n in nodes]},
+           "summary": summary, "funds": [{"a": round(n["assets"] / 1e10), "g": english(n["guarantor"])} for n in nodes]},
           open(out / "funds.json", "w", encoding="utf-8"), separators=(",", ":"), ensure_ascii=False)
 for f in ("thesis.json", "fundrisk.json", "funds.json"):
     print(f, f"{(out / f).stat().st_size/1024:.0f} KB")

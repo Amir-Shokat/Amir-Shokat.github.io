@@ -1,23 +1,43 @@
 // Shared helpers for the project demos: colours, number formats and Chart.js defaults.
 window.Site = (() => {
-  const css = getComputedStyle(document.documentElement);
-  const v = (name, fallback) => (css.getPropertyValue(name).trim() || fallback);
+  const v = (name, fallback) => (getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback);
+  // data colours are the same in light and dark mode; text and grid colours follow the theme
   const colors = {
-    blue: v("--blue", "#41618a"), clay: v("--clay", "#c0714f"), sage: "#6a8f6b",
-    plum: "#8a5a83", sand: "#b4a892", text: v("--text", "#3a3631"), muted: v("--muted", "#6b6458"),
-    line: v("--line", "#e2dacb"), card: v("--card", "#fbf8f2"),
+    blue: "#3d74b8", clay: "#c8734f", sage: "#6a8f6b", plum: "#9a6a93", sand: "#b4a892",
+    get text() { return v("--text", "#191c22"); },
+    get muted() { return v("--muted", "#6a717d"); },
+    get line() { return v("--line", "#e6e2da"); },
   };
-  if (window.Chart) {
-    Chart.defaults.font.family = '"Nunito Sans", system-ui, sans-serif';
-    Chart.defaults.font.size = 13;
+  const retheme = () => {
+    if (!window.Chart) return;
     Chart.defaults.color = colors.muted;
     Chart.defaults.borderColor = colors.line;
+    // charts that already exist keep the colours they resolved, so set them on each one
+    Object.values(Chart.instances).forEach((c) => {
+      const o = c.config.options;
+      o.scales = o.scales || {};
+      Object.keys(c.scales).forEach((k) => {
+        const s = (o.scales[k] = o.scales[k] || {});
+        s.grid = { ...s.grid, color: colors.line };
+        s.border = { ...s.border, color: colors.line };
+        s.ticks = { ...s.ticks, color: colors.muted };
+        s.title = { ...s.title, color: colors.muted };
+      });
+      o.plugins = o.plugins || {};
+      o.plugins.legend = { ...o.plugins.legend, labels: { ...(o.plugins.legend || {}).labels, color: colors.muted } };
+      c.update("none");
+    });
+  };
+  if (window.Chart) {
+    Chart.defaults.font.family = '"Inter", system-ui, sans-serif';
+    Chart.defaults.font.size = 13;
     Chart.defaults.plugins.legend.labels.boxWidth = 12;
     Chart.defaults.plugins.legend.labels.boxHeight = 12;
-    Chart.defaults.plugins.tooltip.backgroundColor = "#2f2b27";
+    Chart.defaults.plugins.tooltip.backgroundColor = "#1f242c";
     Chart.defaults.plugins.tooltip.padding = 10;
     Chart.defaults.maintainAspectRatio = false;
     Chart.defaults.animation.duration = 350;
+    retheme();
   }
   const fmt = {
     pct: (x, d = 1) => (x * 100).toFixed(d) + "%",
@@ -51,5 +71,5 @@ window.Site = (() => {
     input.addEventListener("input", update); update();
   };
   const fail = (el, err) => { el.innerHTML = `<p class="demo-error">This demo could not load (${err.message}). Please refresh the page.</p>`; };
-  return { colors, fmt, $, $$, loadJSON, normCdf, normPdf, rng, gauss, quantile, mean, std, bindRange, fail };
+  return { colors, retheme, fmt, $, $$, loadJSON, normCdf, normPdf, rng, gauss, quantile, mean, std, bindRange, fail };
 })();

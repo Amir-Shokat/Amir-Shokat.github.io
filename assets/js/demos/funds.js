@@ -28,7 +28,7 @@
     $$("#n-role button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === role)));
   }
   $$("#n-role button").forEach((b) => b.addEventListener("click", () => show(b.dataset.v)));
-  show("guarantor");
+  show("manager");
 
   // stress test: share of assets and funds backed by the k largest guarantors
   const totals = {};

@@ -1,4 +1,6 @@
 ---
+featured: true
+short: A trading bot that quotes options around a Black-Scholes fair value and hedges its risk with the stock. Our team came second in Optiver's course competition.
 title: Options Market Making
 order: 4
 kicker: Utrecht University · Algorithms in Finance
@@ -32,8 +34,8 @@ toc: [["idea", "The idea"], ["price", "Pricing an option"], ["quote", "Quoting"]
 </ol>
 
 <h2 id="price">Step 1: what is an option worth?</h2>
-<p>The bot uses the Black-Scholes formula, the classic model for pricing options. Move the sliders
-  to see how the value reacts. The thin line shows what the option pays at expiry, and the thick line
+<p>The bot uses the Black-Scholes formula, the classic model for pricing options. Type in any
+  numbers to see how the value reacts. The thin line shows what the option pays at expiry, and the thick line
   shows what it's worth today, while there's still time for the stock to move.</p>
 
 <div class="demo" id="bs-demo">
@@ -41,14 +43,15 @@ toc: [["idea", "The idea"], ["price", "Pricing an option"], ["quote", "Quoting"]
   <div class="controls">
     <div class="control wide"><label>Option type</label>
       <div class="segmented" id="bs-kind"><button type="button" data-v="call" aria-pressed="true">Call (right to buy)</button><button type="button" data-v="put" aria-pressed="false">Put (right to sell)</button></div></div>
-    <div class="control"><label for="bs-s">Stock price <output id="bs-s-out"></output></label><input id="bs-s" type="range" min="60" max="140" step="1" value="100"></div>
-    <div class="control"><label for="bs-k">Strike price <output id="bs-k-out"></output></label><input id="bs-k" type="range" min="60" max="140" step="1" value="100"></div>
-    <div class="control"><label for="bs-t">Days to expiry <output id="bs-t-out"></output></label><input id="bs-t" type="range" min="1" max="365" step="1" value="90"></div>
-    <div class="control"><label for="bs-v">Volatility (how jumpy the stock is) <output id="bs-v-out"></output></label><input id="bs-v" type="range" min="5" max="100" step="1" value="30"></div>
-    <div class="control"><label for="bs-r">Interest rate <output id="bs-r-out"></output></label><input id="bs-r" type="range" min="0" max="10" step="0.25" value="3"></div>
+    <div class="control"><label for="bs-s">Stock price</label><input id="bs-s" type="number" inputmode="decimal" min="0.01" step="any" value="100"></div>
+    <div class="control"><label for="bs-k">Strike price</label><input id="bs-k" type="number" inputmode="decimal" min="0.01" step="any" value="100"></div>
+    <div class="control"><label for="bs-t">Days to expiry</label><input id="bs-t" type="number" inputmode="numeric" min="0" step="any" value="90"></div>
+    <div class="control"><label for="bs-v">Volatility, % per year</label><input id="bs-v" type="number" inputmode="decimal" min="0.1" step="any" value="30"></div>
+    <div class="control"><label for="bs-r">Interest rate, % per year</label><input id="bs-r" type="number" inputmode="decimal" step="any" value="3"></div>
   </div>
   <div class="stats" id="bs-stats"></div>
   <div class="chart"><canvas id="bs-chart" aria-label="Option value against stock price"></canvas></div>
+  <p class="demo-error" id="bs-error" hidden></p>
   <p class="demo-note"><b>Delta</b>: how much the option moves when the stock moves by 1. <b>Gamma</b>: how fast delta itself changes. <b>Vega</b>: how much value is added if volatility rises by one percentage point. <b>Theta</b>: value lost per day as time passes.</p>
 </div>
 
@@ -64,10 +67,13 @@ toc: [["idea", "The idea"], ["price", "Pricing an option"], ["quote", "Quoting"]
 <div class="demo" id="quote-demo">
   <div class="demo-head"><h3>Be the market maker</h3><span class="demo-tag">Try it</span></div>
   <div class="controls">
-    <div class="control"><label for="q-fair">Fair value from the model <output id="q-fair-out"></output></label><input id="q-fair" type="range" min="36.1" max="37.5" step="0.05" value="36.8"></div>
-    <div class="control"><label for="q-inv">Options I currently hold <output id="q-inv-out"></output></label><input id="q-inv" type="range" min="-100" max="100" step="5" value="0"></div>
+    <div class="control"><label for="q-fair">Fair value from the model</label><input id="q-fair" type="number" inputmode="decimal" min="0.1" step="any" value="36.80"></div>
+    <div class="control"><label for="q-inv">Options I hold (negative = short)</label><input id="q-inv" type="number" inputmode="numeric" min="-100" max="100" step="1" value="0"></div>
+    <div class="control"><label for="q-bid">Best bid from other traders</label><input id="q-bid" type="number" inputmode="decimal" min="0.1" step="0.1" value="36.40"></div>
+    <div class="control"><label for="q-ask">Best ask from other traders</label><input id="q-ask" type="number" inputmode="decimal" min="0.1" step="0.1" value="37.20"></div>
   </div>
-  <p class="demo-note">Other traders are bidding <b>36.40</b> and asking <b>37.20</b>.</p>
+  <p class="demo-note">Prices move in ticks of 0.10. The position limit is 100 options either way.</p>
+  <p class="demo-error" id="q-error" hidden></p>
   <div class="quote-grid">
     <div class="ladder" id="q-ladder" aria-live="polite"></div>
     <p class="callout" id="q-explain"></p>

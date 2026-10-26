@@ -2,38 +2,43 @@
 layout: default
 title: Interests & posts
 permalink: /interests/
-description: What Amirmahdi Shokatabadi does when he is not looking at markets, plus occasional posts.
+description: Swimming, hiking, music and learning Dutch, plus occasional posts by Amirmahdi Shokatabadi.
 ---
 <header class="page-head">
-  <h1>Interests &amp; posts</h1>
+  <p class="eyebrow">Interests &amp; posts</p>
+  <h1>Off the clock</h1>
   <p class="lead">The non-spreadsheet part of my life, and a place for the occasional post.</p>
 </header>
 
-<section class="hobbies">
+<section class="section">
+  <div class="section-label"><h2>Interests</h2></div>
+  <div class="hobbies">
   <div class="hobby">
     <span class="hobby-icon" aria-hidden="true">🏊</span>
-    <h2>Swimming</h2>
+    <h3>Swimming</h3>
     <p>My reset button. Thirty minutes of laps does more for a stubborn bug than another hour at the screen.</p>
   </div>
   <div class="hobby">
     <span class="hobby-icon" aria-hidden="true">🥾</span>
-    <h2>Hiking</h2>
+    <h3>Hiking</h3>
     <p>From mountains back home to the (very flat) Dutch countryside. The Netherlands has hills, if you count dunes.</p>
   </div>
   <div class="hobby">
     <span class="hobby-icon" aria-hidden="true">🎵</span>
-    <h2>Music</h2>
+    <h3>Music</h3>
     <p>I play for fun, not for an audience. My neighbours are very supportive. Probably.</p>
   </div>
   <div class="hobby">
     <span class="hobby-icon" aria-hidden="true">🇳🇱</span>
-    <h2>Learning Dutch</h2>
+    <h3>Learning Dutch</h3>
     <p>Currently at the stage where I can order coffee confidently and then panic at any follow-up question.</p>
+  </div>
   </div>
 </section>
 
-<section class="posts">
-  <h2>Posts</h2>
+<section class="section">
+  <div class="section-label"><h2>Posts</h2></div>
+  <div>
   {% if site.posts.size > 0 %}
   <ul class="post-list">
     {% for post in site.posts %}
@@ -47,4 +52,5 @@ description: What Amirmahdi Shokatabadi does when he is not looking at markets, 
   {% else %}
   <p class="muted">Nothing here yet. Soon!</p>
   {% endif %}
+  </div>
 </section>

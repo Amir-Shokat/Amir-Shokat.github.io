@@ -5,14 +5,16 @@ permalink: /cv/
 description: CV of Amirmahdi Shokatabadi, covering experience in market risk and financial product ownership, an MSc in Banking & Finance from Utrecht University, and skills.
 ---
 <header class="page-head">
+  <p class="eyebrow">CV</p>
   <p class="print-only print-name">Amirmahdi Shokatabadi · {{ site.email }} · linkedin.com/in/{{ site.linkedin }} · {{ site.url | remove: "https://" }}</p>
-  <h1>CV</h1>
+  <h1>Amirmahdi Shokatabadi</h1>
   <p class="lead">Market risk, return measurement and financial data, plus research in empirical finance.</p>
-  <button class="print-btn" type="button" onclick="window.print()">Print or save as PDF</button>
+  <p class="links print-btn"><button class="btn" type="button" onclick="window.print()">Print or save as PDF</button><a class="btn" href="mailto:{{ site.email }}">{{ site.email }}</a></p>
 </header>
 
-<section class="cv-section">
-  <h2>Experience</h2>
+<section class="section">
+  <div class="section-label"><h2>Experience</h2></div>
+  <div>
 
   <article class="entry">
     <div class="entry-head">
@@ -67,16 +69,19 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
     </div>
     <ul><li>Developed course functions for preparing financial data for machine learning: bar generation, labelling and sample weights.</li></ul>
   </article>
+  </div>
 </section>
 
-<section class="cv-section">
-  <h2>Education</h2>
+<section class="section">
+  <div class="section-label"><h2>Education</h2></div>
+  <div>
   <article class="entry">
     <div class="entry-head">
       <div><h3>MSc Banking and Finance</h3><p class="org">Utrecht University · GPA 7.11 / 10</p></div>
       <p class="when">2023 to 2024</p>
     </div>
-    <p>Thesis: <i>Warming Trends: Analysing the Impact of Temperature Anomaly on the Risk and Return of the US Stock Market</i>.
+    <p>Thesis: <i>Warming Trends: Analyzing the Impact of Temperature Anomalies on the Risk and Return of the US Stock Market</i>
+      (<a href="{{ '/assets/papers/warming-trends-msc-thesis-2024.pdf' | relative_url }}">original PDF</a> · <a href="{{ '/research/' | relative_url }}">revised version</a>).
       Courses include Financial Data Analytics, Algorithms in Finance, Risk Management, Asset Pricing and Econometrics.
       Part of the CFA Institute University Affiliation Program.</p>
   </article>
@@ -87,10 +92,12 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
     </div>
     <p>Top 1% (rank 686 of about 200,000) in the national university entrance exam.</p>
   </article>
+  </div>
 </section>
 
-<section class="cv-section">
-  <h2>Skills</h2>
+<section class="section">
+  <div class="section-label"><h2>Skills</h2></div>
+  <div>
   <dl class="skills">
     <div><dt>Markets &amp; risk</dt><dd>VaR, ES and stress tests · TWR and MWR · Sharpe, Sortino, beta · equities and fixed income · option Greeks · trade flow, corporate actions and reconciliation</dd></div>
     <div><dt>Data &amp; code</dt><dd>Python (pandas, NumPy, statsmodels, linearmodels, scikit-learn, spaCy) · SQL · Julia · Git · Power BI · Excel/VBA · LaTeX · Stata</dd></div>
@@ -99,4 +106,5 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
     <div><dt>Languages</dt><dd>Persian (native) · English (fluent) · Dutch (basic, improving)</dd></div>
     <div><dt>Courses</dt><dd>Text Mining (Utrecht University) · DataCamp: SQL, DAX in Power BI, web scraping, time series, Julia</dd></div>
   </dl>
+  </div>
 </section>

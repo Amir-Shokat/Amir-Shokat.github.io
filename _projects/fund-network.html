@@ -7,11 +7,11 @@ tags: data risk
 summary: I built the data tools that collected Iranian market data for our risk reports, and used them to map the firms behind every mutual fund. Fund management turned out to be spread out; liquidity guarantees are far more concentrated.
 question: Where does the market data come from, and how concentrated are the firms that manage and guarantee Iran's mutual funds?
 built: Tested Python clients for the Tehran Stock Exchange and the national fund registry (prices, base volumes, shareholders, a daily panel of every fund), and a network analysis of funds and firms.
-result: Management is spread over 155 firms. Only 44 funds (22% of assets) have a liquidity guarantor, and five banks and brokers back two thirds of that guaranteed money.
+result: Management is spread over 155 firms. Only 43 funds (22% of assets) have a liquidity guarantor, and five banks and brokers back two thirds of that guaranteed money.
 skills: Data engineering · API integration · concentration and counterparty risk · Python · testing
 tech: A shared HTTP layer with retries, back-off and rate limiting; clients for TSETMC, FIPIRAN and Mabna (token from environment variables only); Persian name normalisation; incremental fund-panel updates; network and Herfindahl-Hirschman concentration measures. Tested against recorded responses, no network needed.
 repo: tehran-market-data
-tests: 27
+tests: 29
 chartjs: true
 demo: funds
 toc: [["idea", "The data problem"], ["map", "Who backs the funds"], ["stress", "What if"], ["tools", "The tools"], ["learned", "What I learned"]]
@@ -33,8 +33,8 @@ toc: [["idea", "The data problem"], ["map", "Who backs the funds"], ["stress", "
 <div class="demo" id="map-demo">
   <div class="demo-head"><h3>Share of all fund assets, by firm</h3><span class="demo-tag">Explore</span></div>
   <p class="toolbar"><span class="segmented" id="n-role">
-    <button type="button" data-v="guarantor" aria-pressed="true">Guarantors</button>
-    <button type="button" data-v="manager" aria-pressed="false">Managers</button></span></p>
+    <button type="button" data-v="manager" aria-pressed="true">Managers</button>
+    <button type="button" data-v="guarantor" aria-pressed="false">Guarantors</button></span></p>
   <div class="stats" id="n-stats"></div>
   <div class="chart tall"><canvas id="n-bars" aria-label="Top ten firms by share of fund assets"></canvas></div>
   <p class="demo-note" id="n-note"></p>

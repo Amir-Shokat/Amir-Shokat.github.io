@@ -30,7 +30,7 @@
         <a href="{{ '/' | relative_url }}" {% if path == '/' %}aria-current="page"{% endif %}>About</a>
         <a href="{{ '/cv/' | relative_url }}" {% if path == '/cv/' %}aria-current="page"{% endif %}>CV</a>
         <a href="{{ '/projects/' | relative_url }}" {% if path == '/projects/' or page.collection == 'projects' %}aria-current="page"{% endif %}>Projects</a>
-        <a href="{{ '/research/' | relative_url }}" {% if path == '/research/' %}aria-current="page"{% endif %}>Research</a>
+        <a href="{{ '/research/' | relative_url }}" {% if path == '/research/' or path == '/research/ideas/' %}aria-current="page"{% endif %}>Research</a>
         <a href="{{ '/interests/' | relative_url }}" {% if path == '/interests/' or page.layout == 'post' %}aria-current="page"{% endif %}>Interests</a>
       </nav>
       <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode">

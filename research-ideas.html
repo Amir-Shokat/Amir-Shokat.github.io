@@ -1,0 +1,119 @@
+---
+layout: default
+title: Research ideas
+permalink: /research/ideas/
+description: Research ideas in climate finance by Amirmahdi Shokatabadi. Does local heat reach stock prices through where firms operate or where their investors live, and does climate disclosure still mean anything once AI writes it?
+---
+<header class="page-head">
+  <p class="eyebrow"><a href="{{ '/research/' | relative_url }}">Research</a> · Ideas</p>
+  <h1>Research ideas in climate finance</h1>
+  <p class="lead">My thesis found that heat at a firm's headquarters does not move its stock. I don't read that
+    as "heat does not matter". These are the projects I would like to take on next, in a PhD or research master.</p>
+  <p class="muted">Working drafts, November 2026. They will change as I read more.</p>
+</header>
+
+<section class="section" id="operations">
+  <div class="section-label"><h2>Main idea</h2></div>
+  <div>
+    <h3>Operations or attention? How local heat reaches US stock prices</h3>
+    <p class="lead">Does local heat move US stock prices through the places where firms operate, or through the
+      places where their investors live?</p>
+    <p><strong>Why the thesis found nothing.</strong> My thesis matched temperature to the headquarters of about
+      17,000 US firms (1.86 million firm-months, 1995 to 2024) and found no effect on returns. Temperature extremes
+      move earnings in over 40% of industries, some up and some down, so the average can cancel out (Addoum, Ng
+      and Ortiz-Bobea 2023). A headquarters address is also a poor guide to where a firm produces: in a pilot of
+      50 firms from my sample, more than half of those that list their sites have most of them outside the
+      headquarters state. So there are two places to look.</p>
+    <div class="directions">
+      <article class="direction">
+        <span class="num">01</span>
+        <h3>Heat where the firm operates</h3>
+        <p>Heat at a firm's plants slows work and raises costs. If that is what matters, earnings should fall,
+          and the stock price should drop when they are announced and stay down.</p>
+      </article>
+      <article class="direction">
+        <span class="num">02</span>
+        <h3>Heat where the investors live</h3>
+        <p>Heat in investors' own cities changes nothing at the firm, but it can change what they believe about
+          climate risk. If that is what moves prices, they should move with no change in earnings, and then
+          reverse.</p>
+      </article>
+    </div>
+    <p><strong>What is new.</strong> Each side has been studied on its own. Addoum, Ng and Ortiz-Bobea (2020, 2023)
+      measure the operations side with establishment data, and heat at suppliers' sites cuts operating income
+      along the supply chain (Pankratz and Schiller 2024). On the investor side, abnormally warm weather draws
+      attention to climate risk (Choi, Gao and Jiang 2020), and mutual funds change their holdings after heat at
+      their adviser's location (Alekseev et al. 2022). I have not found a paper that, for the same firms, puts
+      heat at the operating sites next to heat at the investors' locations and asks which one is priced. My
+      search is not finished, so I hold this loosely.</p>
+    <p><strong>Data and method.</strong> Operating locations come from the property sections and subsidiary lists
+      of 10-K filings on EDGAR, geocoded with the OpenStreetMap pipeline I wrote for headquarters addresses.
+      Investor locations come from 13F filer addresses, linked to 13F holdings and to CRSP and Compustat. Each
+      firm-month then gets two PRISM temperature anomalies, one weighted by operating sites and one by
+      institutional ownership, tested together in my thesis panel and around earnings announcements.</p>
+    <p><strong>The main threat.</strong> The two measures are correlated, because investors prefer local stocks.
+      So I would add the holder-level design of Alekseev et al. (2022): comparing investors who hold the same firm
+      in the same quarter removes the operations channel, and only the weather where each investor sits varies.
+      A 13F address is the institution's office, not always where decisions are made, and holdings are quarterly.
+      Both add noise and push the attention effect toward zero.</p>
+  </div>
+</section>
+
+<section class="section" id="disclosure">
+  <div class="section-label"><h2>Second idea</h2></div>
+  <div>
+    <h3>Climate talk when AI writes it</h3>
+    <p class="lead">When AI makes climate disclosure cheap to write, does what firms say about climate risk still
+      predict what happens to them?</p>
+    <p>Climate talk was partly cheap even before large language models (Bingler et al. 2022, 2024). But
+      AI-written earnings-call presentations seem to raise information quality (Chen and Wang 2025), so the sign
+      is open. I would test whether, after 2023, the text-based physical exposure of Sautner et al. (2023) still
+      lines up with the geocoded exposure from the main idea, and whether market-based measures such as carbon
+      beta (Huij et al. 2026) gain weight as text loses it.</p>
+    <p>A plain before-and-after split is weak, because climate reporting rules were also changing around 2023.
+      I would need a firm-level measure of AI use and compare firms with high and low AI use in the same years.</p>
+    <p><strong>The link.</strong> Both projects need a measure of where a firm's assets actually are that does not
+      depend on what the firm says.</p>
+  </div>
+</section>
+
+<section class="section" id="next">
+  <div class="section-label"><h2>Further out</h2></div>
+  <div>
+    <p>The same idea, taken to Europe and to other kinds of climate events.</p>
+    <div class="directions">
+      <article class="direction">
+        <span class="num">03</span>
+        <h3>Floods in Europe</h3>
+        <p>After the July 2021 floods in Germany, Belgium and the Netherlands, were firms whose plants sit in
+          flood-prone areas, but stayed dry, repriced? A disaster is salient in a way a warm month is not.</p>
+      </article>
+      <article class="direction">
+        <span class="num">04</span>
+        <h3>Heat at European plants</h3>
+        <p>Do hot days at European firms' plants lower their earnings, and have analysts learned to expect it
+          since the 2018 to 2022 heat waves? Plant locations would come from the EU's public emissions register
+          (E-PRTR).</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label"><h2>References</h2></div>
+  <div>
+    <p class="refs">
+      Addoum, Ng &amp; Ortiz-Bobea (2020). Temperature shocks and establishment sales. <i>Review of Financial Studies</i> 33(3).<br>
+      Addoum, Ng &amp; Ortiz-Bobea (2023). Temperature shocks and industry earnings news. <i>Journal of Financial Economics</i> 150(1).<br>
+      Alekseev, Giglio, Maingi, Selgrad &amp; Stroebel (2022). A quantity-based approach to constructing climate risk hedge portfolios. NBER Working Paper 30703.<br>
+      Bingler, Kraus, Leippold &amp; Webersinke (2022). <i>Finance Research Letters</i>.<br>
+      Bingler et al. (2024). <i>Journal of Banking &amp; Finance</i> 164.<br>
+      Chen &amp; Wang (2025). SSRN working paper 5959496.<br>
+      Choi, Gao &amp; Jiang (2020). <i>Review of Financial Studies</i>.<br>
+      Huij, Laurs, Stork &amp; Zwinkels (2026). Carbon beta. <i>Financial Analysts Journal</i> 82(3).<br>
+      Pankratz &amp; Schiller (2024). Climate change and adaptation in global supply-chain networks. <i>Review of Financial Studies</i>.<br>
+      Sautner, van Lent, Vilkov &amp; Zhang (2023). <i>Journal of Finance</i> 78(3).
+    </p>
+    <a class="more-link" href="{{ '/research/' | relative_url }}">Back to research and the thesis</a>
+  </div>
+</section>

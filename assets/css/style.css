@@ -232,6 +232,13 @@ main { padding-top: 56px; padding-bottom: 88px; }
 .plain { padding-left: 18px; margin: 0; }
 .plain li { margin: 6px 0; color: var(--text-2); }
 .plain li::marker { color: var(--line-strong); }
+.download { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px; margin-top: 26px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; }
+.download h2 { font-size: 20px; margin: 0 0 4px; }
+.download p { font-size: 15px; color: var(--muted); margin: 0; }
+a.direction { display: block; color: inherit; transition: border-color .2s ease, box-shadow .2s ease; }
+a.direction:hover { text-decoration: none; border-color: var(--line-strong); box-shadow: var(--shadow); }
+.directions + p { margin-top: 22px; }
+.context + .timeline { margin-top: 14px; }
 
 /* ---- interests & posts ---- */
 .hobbies { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }

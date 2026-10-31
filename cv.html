@@ -9,7 +9,7 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
   <p class="print-only print-name">Amirmahdi Shokatabadi · {{ site.email }} · linkedin.com/in/{{ site.linkedin }} · {{ site.url | remove: "https://" }}</p>
   <h1>Amirmahdi Shokatabadi</h1>
   <p class="lead">Market risk, return measurement and financial data, plus research in empirical finance.</p>
-  <p class="links print-btn"><button class="btn" type="button" onclick="window.print()">Print or save as PDF</button><a class="btn" href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  <p class="links print-btn"><button class="btn" type="button" onclick="window.print()">Print or save as PDF</button><a class="btn" href="{{ '/assets/papers/amirmahdi-shokatabadi-academic-cv.pdf' | relative_url }}">Academic CV (PDF)</a><a class="btn" href="mailto:{{ site.email }}">{{ site.email }}</a></p>
 </header>
 
 <section class="section">
@@ -24,6 +24,7 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
     <p class="context">Brokerage and asset manager with 13M+ clients. Portfolio team of the Easy Trader app (7M+ users).</p>
     <ul>
       <li>Led the Time-Weighted Return feature from methodology to release readiness: 95%+ calculation success and 90%+ displayable rate on production data.</li>
+      <li>Chose and tested the methods for the app's risk measures: volatility, historical VaR, maximum drawdown, Sharpe ratio and beta.</li>
       <li>Cut Money-Weighted Return discrepancies by 50%+ for 2M+ users by tracing mismatches to edge cases and prioritising the fixes.</li>
       <li>Defined transaction-mapping rules that separate trades, dividends, bonus shares, rights issues, broker changes and credit events from external cash flows.</li>
       <li>Reduced return mismatches by about 30% by aligning the Options and Credit teams on the shared calculations.</li>
@@ -40,15 +41,31 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
     <p class="context">Investment bank with $500M in assets under management.</p>
     <ul>
       <li>Monitored market risk for equity, fixed-income and gold funds: VaR (historical and Monte Carlo), stress tests, duration and liquidity.</li>
+      <li>Estimated stock betas and factor models for the Iranian market, and built and validated a dataset of all Iranian mutual funds and their holdings from web scraping and APIs.</li>
       <li>Reconciled daily trades, positions and cash against custodian, trading and accounting systems, and automated the matching with Python and SQL.</li>
       <li>Investigated trade breaks, failed settlements and pricing discrepancies; documented root causes and added preventive controls.</li>
       <li>Built the data pipeline behind fund risk reports (<a href="{{ '/projects/fund-risk/' | relative_url }}">Fund Risk Toolkit</a>, <a href="{{ '/projects/fund-network/' | relative_url }}">market data tools</a>) and tracked key risk indicators in Power BI.</li>
     </ul>
   </article>
 
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label"><h2>Research &amp; teaching</h2></div>
+  <div>
+
   <article class="entry">
     <div class="entry-head">
-      <div><h3>Research Assistant</h3><p class="org">RiskLab, Toronto (remote)</p></div>
+      <div><h3>Independent research: extending the thesis</h3><p class="org">Advisor: Dr. Fatemeh Salimi · paused</p></div>
+      <p class="when">Apr 2025 to Sep 2025</p>
+    </div>
+    <ul><li>Began extending my thesis to compare how developed and emerging markets price temperature shocks. Collected stock and firm data and geocoded firm addresses from 10-K filings with OpenStreetMap in Python.</li></ul>
+  </article>
+
+  <article class="entry">
+    <div class="entry-head">
+      <div><h3>Research Assistant (volunteer)</h3><p class="org">RiskLab, Toronto (remote) · Supervisor: Dr. Hamid Arian</p></div>
       <p class="when">Jul 2024 to Dec 2024</p>
     </div>
     <ul><li>Co-developed RiskLabAI, an open-source Python library for financial machine learning: data structures, labelling and sample weighting.</li></ul>
@@ -56,7 +73,7 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
 
   <article class="entry">
     <div class="entry-head">
-      <div><h3>Research Assistant</h3><p class="org">Utrecht University</p></div>
+      <div><h3>Research Assistant</h3><p class="org">Utrecht University · Supervisor: Dr. Thomas Walther</p></div>
       <p class="when">Jul 2024 to Aug 2024</p>
     </div>
     <ul><li>Built and processed large datasets in Python for a project on biodiversity and sustainability risk in financial markets.</li></ul>
@@ -64,11 +81,35 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
 
   <article class="entry">
     <div class="entry-head">
-      <div><h3>Teaching Assistant</h3><p class="org">University of Toronto, <i>Financial AI</i> · Kharazmi University, <i>Fundamentals of Investment Management</i></p></div>
-      <p class="when">2022, 2024</p>
+      <div><h3>Teaching Assistant, <i>Financial AI</i></h3><p class="org">University of Toronto (remote)</p></div>
+      <p class="when">Sep 2024 to Dec 2024</p>
     </div>
-    <ul><li>Developed course functions for preparing financial data for machine learning: bar generation, labelling and sample weights.</li></ul>
+    <ul><li>Built Python notebooks on preparing raw market data for machine learning: tick, volume and dollar bars, triple-barrier labels and uniqueness-based sample weights.</li></ul>
   </article>
+
+  <article class="entry">
+    <div class="entry-head">
+      <div><h3>Teaching Assistant, <i>Fundamentals of Investment Management</i></h3><p class="org">Kharazmi University</p></div>
+      <p class="when">Jan 2022 to Mar 2022</p>
+    </div>
+    <ul><li>Asked the lecturer for the role as a final-year undergraduate. Led weekly tutorials for 40 students, wrote problem sets and graded assignments.</li></ul>
+  </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label"><h2>Academic projects</h2></div>
+  <div>
+    <p class="context">Coursework at Utrecht University. Most have their own page with a demo.</p>
+    <ol class="timeline">
+      <li><time>Jun 2024</time><div><span class="what">Blended finance for climate action</span><span class="where">Two case studies on blended finance, where public or philanthropic money is used to bring in private capital for sustainable development and climate resilience.</span></div></li>
+      <li><time>Jun 2024</time><div><a class="what" href="{{ '/projects/news-sentiment/' | relative_url }}">News sentiment analysis</a><span class="where">Polarity and subjectivity of CNBC articles about Donald Trump, with natural language processing in Python (spaCy).</span></div></li>
+      <li><time>Apr 2024</time><div><a class="what" href="{{ '/projects/options-market-making/' | relative_url }}">Option market making</a><span class="where">A market-making algorithm for options using the Greeks and high-frequency data, in a course run with Optiver. Our team came second in the Optiver Algo-Competition.</span></div></li>
+      <li><time>Feb 2024</time><div><a class="what" href="{{ '/projects/pairs-trading/' | relative_url }}">Relative value spread trading</a><span class="where">A pairs-trading strategy: Engle-Granger cointegration tests, then trading the spread when it moves away from its long-run relation.</span></div></li>
+      <li><time>Jan 2024</time><div><a class="what" href="{{ '/projects/bitcoin-gold/' | relative_url }}">Bitcoin and gold as geopolitical hedges</a><span class="where">Time-series tests of how the two assets respond when geopolitical risk rises.</span></div></li>
+      <li><time>Jan 2024</time><div><a class="what" href="{{ '/projects/yield-curve/' | relative_url }}">Risk management</a><span class="where">Interest-rate risk with principal component analysis, and Value-at-Risk by the historical and model-building methods.</span></div></li>
+      <li><time>Nov 2023</time><div><span class="what">M&amp;A announcements in US tech</span><span class="where">An event study of abnormal stock returns around merger and acquisition announcements.</span></div></li>
+    </ol>
   </div>
 </section>
 
@@ -82,7 +123,7 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
     </div>
     <p>Thesis: <i>Warming Trends: Analyzing the Impact of Temperature Anomalies on the Risk and Return of the US Stock Market</i>
       (<a href="{{ '/assets/papers/warming-trends-msc-thesis-2024.pdf' | relative_url }}">original PDF</a> · <a href="{{ '/research/' | relative_url }}">revised version</a>).
-      Courses include Financial Data Analytics, Algorithms in Finance, Risk Management, Asset Pricing and Econometrics.
+      Courses include Asset Pricing, Empirical Economics, Sustainable Finance, Financial Data Analytics, Algorithms in Finance and Risk Management.
       Part of the CFA Institute University Affiliation Program.</p>
   </article>
   <article class="entry">
@@ -90,7 +131,9 @@ description: CV of Amirmahdi Shokatabadi, covering experience in market risk and
       <div><h3>BSc Financial Management</h3><p class="org">Kharazmi University · GPA 3.57 / 4</p></div>
       <p class="when">2018 to 2022</p>
     </div>
-    <p>Top 1% (rank 686 of about 200,000) in the national university entrance exam.</p>
+    <p>Courses include mathematics, statistics, operations research and econometrics. Since then, online:
+      Linear Algebra (Johns Hopkins, Coursera) and Differential and Integral Calculus (LSE, edX).
+      Top 1% (rank 686 of about 200,000) in the national university entrance exam.</p>
   </article>
   </div>
 </section>

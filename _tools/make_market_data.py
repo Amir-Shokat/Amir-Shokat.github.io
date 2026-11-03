@@ -57,9 +57,15 @@ for c in ("typeOfInvest", "smallSymbolName", "manager", "fund_type_name", "name"
     if c not in f:
         f[c] = None
 f = f[f["netAsset"].fillna(0) > 0].copy()
-# FIPIRAN sometimes returns only part of the funds for a day; those days would show fake drops in assets
+f["regNo"] = f["regNo"].astype(str)      # FIPIRAN sends it as text, older files as numbers
+# "the fund's board" is FIPIRAN's placeholder for self-managed funds, not a firm
+f.loc[f["manager"].map(persian).eq("هیئت مدیره صندوق"), "manager"] = None
+# FIPIRAN sometimes returns only part of the funds for a day, and its history for past dates can
+# miss a fifth of the funds; such days would show fake jumps in assets, so a day must have at least
+# 90% of the most funds seen on it or in the 30 days after it
 per_day = f.groupby("date")["regNo"].nunique()
-complete = per_day[per_day >= 0.9 * per_day.rolling(15, center=True, min_periods=1).median()].index
+ahead = per_day[::-1].rolling(30, min_periods=1).max()[::-1]
+complete = per_day[per_day >= 0.9 * ahead].index
 f = f[f["date"].isin(complete)].sort_values(["regNo", "date"])
 TYPES = {persian(k): v for k, v in TYPES.items()}
 f["type"] = f["fund_type_name"].map(lambda s: TYPES.get(persian(s), "Other") if isinstance(s, str) else "Other")
@@ -72,9 +78,11 @@ f["ret"] = nav / nav.groupby(f["regNo"]).shift() - 1
 payout = (f["dividendIntervalPeriod"].fillna(0) > 0) & (f["ret"] < -0.003) & f["daily_return"].between(-0.03, 0.03) & (f["daily_return"] > f["ret"] + 0.003)
 f.loc[payout, "ret"] = f.loc[payout, "daily_return"]
 f.loc[f["ret"].abs() > 0.5, "ret"] = np.nan        # NAV entry errors
-# gold funds without a commodity field report their gold certificates as "stock"
+# gold funds without a commodity field leave their gold certificates out of the other columns
+# (older reports put them under "stock"), so the remainder is counted as commodity
 gold = f["type"].eq("Commodity (gold)") & f["commodity"].isna()
-f.loc[gold, "commodity"], f.loc[gold, "stock"] = f.loc[gold, "stock"], 0
+rest = f.loc[gold, ["bond", "deposit", "cash", "fundUnit", "other"]].fillna(0).sum(axis=1)
+f.loc[gold, "commodity"], f.loc[gold, "stock"] = (1 - rest).clip(0, 1), 0
 for c in MIX:
     f[c] = f[c].clip(0, 1)
 # net flow = change in units outstanding x redemption NAV; uses snapshot fields only, so it works for ETFs too
@@ -96,6 +104,9 @@ counts = f.groupby("date")["regNo"].nunique()
 last_day = f.groupby("week")["date"].transform("max")
 wk = f[f["date"].eq(last_day)]
 def mix_of(d):
+    d = d[d[MIX].fillna(0).sum(axis=1) >= 0.5]   # many funds report no holdings at all; leave them out
+    if d.empty:
+        return None
     w = d["netAsset"]
     return {c: r2((d[c].fillna(0) * w).sum() / w.sum(), 4) for c in MIX}
 all_weeks = sorted(wk["week"].unique())
@@ -126,9 +137,12 @@ px = pd.read_parquet(store / "etf_prices.parquet") if (store / "etf_prices.parqu
 px["date"] = pd.to_datetime(px["date"])
 px["regNo"] = px["regNo"].astype(str)
 # premium over NAV uses the actual traded close, not the dividend-adjusted price
-px = px[["regNo", "date", "close"]].merge(f[["regNo", "date", "statisticalNav"]], on=["regNo", "date"])
+px = px[["regNo", "date", "close"]].merge(f[["regNo", "date", "statisticalNav", "type"]], on=["regNo", "date"])
 px["premium"] = (px["close"] / px["statisticalNav"] - 1).where(px["statisticalNav"] > 0)
-px.loc[(px["premium"] <= -0.9) | (px["premium"] > 1), "premium"] = np.nan   # zero or garbled prices
+# leveraged funds trade a different unit class, and venture, private, project and real-estate funds
+# report NAVs that do not match their traded units, so their gaps say nothing about pricing
+px.loc[px["type"].isin(["Leveraged equity", "Venture capital", "Private equity", "Project", "Real estate"]), "premium"] = np.nan
+px.loc[px["premium"].abs() > 0.5, "premium"] = np.nan   # mismatched units or garbled prices
 px = px.drop_duplicates(["regNo", "date"], keep="last")
 
 HOLDER_KINDS = [  # first match wins; names are only used to group holders, never published

@@ -26,5 +26,9 @@ if git diff --cached --quiet; then
   exit 0
 fi
 git commit -q -m "Update fund-market data to $(date +%Y-%m-%d)"
-git push -q
-echo "published"
+# GitHub is often unreachable without a VPN; the commit is safe locally and can be pushed later
+if git push -q; then
+  echo "published"
+else
+  echo "committed but not pushed: turn the VPN on and run  git -C \"$SITE\" push"
+fi

@@ -20,7 +20,7 @@
   const pressed = (sel, v) => $$(`${sel} button`).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === v)));
   const timeX = (labels) => ({ ticks: { maxTicksLimit: 8, autoSkip: true, maxRotation: 0, callback: (_, i) => month(labels[i]) }, grid: { display: false } });
   const n = d.dates.length;
-  $("#m-asof").innerHTML = `<strong>Data through ${day(d.asof)}</strong>, collected since ${day(d.start)}: ${d.funds.length} funds, ${n} trading days. Updated weekly, so the history grows each week.`;
+  $("#m-asof").innerHTML = `<strong>Data through ${day(d.asof)}</strong>, collected since ${day(d.start)}: ${d.funds.length} funds, ${n} days. Updated weekly, so the history grows each week.`;
 
   // ---------------------------------------------------------------- market size
   const aum = sumGroups(d.aum, n);
@@ -176,7 +176,7 @@
       holdChart.update();
     }
     $("#e-note").textContent = `Managed by ${f.mgr || "an unnamed manager"}. Returns come from the daily change in the fund's redemption price, with payouts added back. ` +
-      (f.vol == null ? `Risk measures appear once the fund has about ${d.min_days} trading days of data. ` : f.sharpe == null ? "Sharpe and beta are left out for funds whose value hardly moves. " : `Sharpe uses the median fixed-income fund return (${fmt.pct(d.rf, 1)} a year) as the safe rate. `) +
+      (f.vol == null ? `Risk measures appear once the fund has about ${d.min_days} days of data. ` : f.sharpe == null ? "Sharpe and beta are left out for funds whose value hardly moves. " : `Sharpe uses the median fixed-income fund return (${fmt.pct(d.rf, 1)} a year) as the safe rate. `) +
       (etf ? "For ETFs the last two charts show the price gap to NAV and who owns the units (holders with at least 1%)." : "");
   }
   eType.addEventListener("change", () => { fillFunds(eFund.value); showFund(); });

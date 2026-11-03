@@ -39,6 +39,9 @@ EN = {
     "مشاور سرمایه‌گذاری ارزش پرداز آریان": "Arzesh Pardaz Arian Investment Advisors",
     "سبدگردان اقتصاد بیدار": "Eghtesad Bidar Asset Management",
     "سبدگردان اندیشه صبا": "Andisheh Saba Asset Management",
+    "مشاور سرمایه‌گذاری ساتراپ پاسارگاد": "Satrap Pasargad Investment Advisors",
+    "سبدگردان فارابی": "Farabi Asset Management",
+    "مدیر کارگزاری کیان": "Kian Brokerage",
 }
 
 

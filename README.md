@@ -25,3 +25,16 @@ PDF under the same name.
 
 A project's `tags:` (separated by spaces) decide which filters on the Projects page it appears under:
 `risk`, `research`, `trading`, `data`.
+
+## Fund-market dashboard data
+
+The dashboard at `/projects/fund-market/` reads `assets/data/market/`, built from a local data store
+(`../market-data`, not in git) that the [tehran-market-data](https://github.com/Amir-Shokat/tehran-market-data)
+clients keep up to date. To refresh it and publish:
+
+```bash
+_tools/update_market.sh
+```
+
+Run it **without a VPN**: FIPIRAN only answers Iranian internet addresses. The first run collects the
+last two weeks; after that, run it about once a week and it adds the days since the last run.

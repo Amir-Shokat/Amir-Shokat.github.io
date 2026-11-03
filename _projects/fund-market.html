@@ -1,0 +1,125 @@
+---
+title: Iran's Fund Market, Week by Week
+order: 9
+kicker: Work · Market monitoring dashboard
+thumb: ""
+tags: data risk
+summary: A dashboard of every Iranian mutual fund, rebuilt from the Power BI report I made at the bank. It follows where the money goes, who manages it, how risky each fund is and who owns the exchange-traded funds, and it is refreshed every week from fresh registry and exchange data.
+question: Where is money in Iran's mutual-fund market going, which firms collect it, and how risky and how fairly priced are the individual funds?
+built: A weekly pipeline from my market-data package to compact JSON files, and an interactive dashboard that replaces a 17-page hand-refreshed Power BI report. One command collects the new days, rebuilds the data and publishes the site.
+result: A template that stays current on its own data, and eight errors in the original report found and fixed along the way, from empty flow pages to gold counted as stocks.
+skills: Data pipelines · dashboards · fund analytics · risk measures · Python · JavaScript
+tech: A daily FIPIRAN panel (about 500 funds) and TSETMC prices and shareholder lists, collected with tehran-market-data. Flows are measured from changes in units outstanding; partial registry days are removed; returns come from the redemption NAV with payouts added back, because the reported daily returns often contradict it; VaR and expected shortfall are historical (95%, daily); ETF premiums use traded, not dividend-adjusted, prices. Holder names are only used to group holders into categories and are never published.
+repo: Amir-Shokat.github.io
+chartjs: true
+demo: market
+toc: [["market", "The market"], ["flows", "Money in and out"], ["managers", "Who manages it"], ["mix", "What funds hold"], ["explorer", "Any fund"], ["rank", "Rankings"], ["etf", "ETF pricing"], ["owners", "Who owns ETFs"], ["rebuild", "From Power BI to the web"]]
+---
+<p class="callout" id="m-asof">Loading the latest data…</p>
+
+<h2 id="market">The market</h2>
+<p>Iran has around 500 mutual funds. Each reports its size, unit price and holdings to the national fund
+  registry (FIPIRAN) every day. Adding them up gives the size of the whole market, split by the kind of fund.</p>
+<div class="demo" id="market-demo">
+  <div class="demo-head"><h3>Assets under management by fund type</h3><span class="demo-tag">Explore</span></div>
+  <div class="stats" id="m-stats"></div>
+  <p class="toolbar"><span class="segmented" id="m-scale">
+    <button type="button" data-v="abs" aria-pressed="true">Trillion tomans</button>
+    <button type="button" data-v="pct" aria-pressed="false">Share of market</button></span></p>
+  <div class="chart tall"><canvas id="m-aum" aria-label="Fund assets by type over time"></canvas></div>
+  <p class="demo-note">Amounts in trillion tomans (10<sup>13</sup> rials, the "hemat" used in Iranian reporting). Days on which the registry returned only part of the funds are left out.</p>
+</div>
+
+<h2 id="flows">Money in and out</h2>
+<p>Assets grow for two reasons: the funds' investments gain value, and investors put in new money. The
+  second part, the <strong>net flow</strong>, shows what investors actually choose. I measure it from the
+  change in the number of units each fund has outstanding, valued at that day's redemption price.</p>
+<div class="demo" id="flow-demo">
+  <div class="demo-head"><h3>Weekly net flows by fund type</h3><span class="demo-tag">Explore</span></div>
+  <p class="toolbar"><span class="segmented" id="f-range">
+    <button type="button" data-v="13" aria-pressed="false">3 months</button>
+    <button type="button" data-v="26" aria-pressed="false">6 months</button>
+    <button type="button" data-v="0" aria-pressed="true">All</button></span></p>
+  <div class="chart tall"><canvas id="f-bars" aria-label="Weekly net flows"></canvas></div>
+  <div class="stats" id="f-stats"></div>
+</div>
+
+<h2 id="managers">Who manages it</h2>
+<div class="demo" id="mgr-demo">
+  <div class="demo-head"><h3>The 15 largest fund managers</h3><span class="demo-tag">Explore</span></div>
+  <p class="toolbar"><span class="segmented" id="g-metric">
+    <button type="button" data-v="share" aria-pressed="true">Market share</button>
+    <button type="button" data-v="growth" aria-pressed="false">Growth</button>
+    <button type="button" data-v="flow" aria-pressed="false">Net new money</button></span></p>
+  <div class="chart tall"><canvas id="g-bars" aria-label="Largest fund managers"></canvas></div>
+  <p class="demo-note" id="g-note"></p>
+</div>
+
+<h2 id="mix">What funds hold</h2>
+<div class="demo" id="mix-demo">
+  <div class="demo-head"><h3>Asset mix, weighted by fund size</h3><span class="demo-tag">Explore</span></div>
+  <div class="controls"><div class="control"><label for="x-group">Funds</label><select id="x-group"></select></div></div>
+  <div class="chart"><canvas id="x-area" aria-label="Asset mix over time"></canvas></div>
+  <p class="demo-note">Shares of stocks, bonds, bank deposits, cash, commodities (mostly gold certificates), units of other funds and other assets, from the funds' daily reports.</p>
+</div>
+
+<h2 id="explorer">Any fund</h2>
+<div class="demo" id="fund-demo">
+  <div class="demo-head"><h3>Fund explorer</h3><span class="demo-tag">Pick a fund</span></div>
+  <div class="controls">
+    <div class="control"><label for="e-type">Type</label><select id="e-type"></select></div>
+    <div class="control wide"><label for="e-fund">Fund <span class="val" id="e-count"></span></label><select id="e-fund" dir="auto"></select></div>
+  </div>
+  <div class="stats" id="e-stats"></div>
+  <div class="chart"><canvas id="e-nav" aria-label="Growth of the fund and the stock index"></canvas></div>
+  <div class="chart short"><canvas id="e-flow" aria-label="Fund size and weekly flows"></canvas></div>
+  <div class="chart short"><canvas id="e-mix" aria-label="Fund asset mix"></canvas></div>
+  <div id="e-etf">
+    <div class="chart short"><canvas id="e-prem" aria-label="Premium of price over NAV"></canvas></div>
+    <div class="chart short"><canvas id="e-hold" aria-label="Ownership by holder type"></canvas></div>
+  </div>
+  <p class="demo-note" id="e-note"></p>
+</div>
+
+<h2 id="rank">Rankings</h2>
+<div class="demo" id="rank-demo">
+  <div class="demo-head"><h3>Funds ranked</h3><span class="demo-tag">Sort</span></div>
+  <div class="controls"><div class="control"><label for="r-type">Type</label><select id="r-type"></select></div></div>
+  <div class="table-wrap"><table class="data-table" id="r-table"></table></div>
+  <p class="demo-note" id="r-note"></p>
+</div>
+
+<h2 id="etf">Are ETFs fairly priced?</h2>
+<p>Exchange-traded funds trade on the stock exchange at a market price, which can drift away from the value
+  of what the fund holds (its NAV). A price above NAV is a <strong>premium</strong>, below it a
+  <strong>discount</strong>. Large gaps mean buyers are overpaying, or that the market maker is not doing its job.</p>
+<div class="demo" id="etf-demo">
+  <div class="demo-head"><h3>Largest premiums and discounts today</h3><span class="demo-tag">Latest day</span></div>
+  <div class="chart tall"><canvas id="p-bars" aria-label="ETF premiums and discounts"></canvas></div>
+  <p class="demo-note">Closing price against the fund's statistical NAV, for ETFs with at least 1 trillion tomans in assets. Click a bar to open the fund above.</p>
+</div>
+
+<h2 id="owners">Who owns the ETFs?</h2>
+<p>The exchange publishes every holder with at least 1% of a listed fund. I group them into kinds of
+  investor, so no individual names are shown.</p>
+<div class="demo" id="own-demo">
+  <div class="demo-head"><h3>Ownership of exchange-traded funds</h3><span class="demo-tag">Weighted by size</span></div>
+  <div class="chart tall"><canvas id="o-area" aria-label="ETF ownership by holder type"></canvas></div>
+  <p class="demo-note" id="o-note"></p>
+</div>
+
+<h2 id="rebuild">From Power BI to the web</h2>
+<p>This started as a 17-page Power BI report that I refreshed by hand from Excel exports. Rebuilding it
+  turned up real errors, which are fixed here:</p>
+<ul>
+  <li><strong>The flow pages were empty.</strong> They used a column that no longer existed in the data. Flows are now computed from units outstanding, which works for every fund, ETFs included.</li>
+  <li><strong>"Market share by fund type" showed funds, not types.</strong> The pie chart was wired to the fund name.</li>
+  <li><strong>ETF premiums used dividend-adjusted prices,</strong> which shift the past price history every time a fund pays out. Premiums now use the real traded price.</li>
+  <li><strong>Gold counted as stocks.</strong> Before the registry added a commodity field, gold funds reported their gold certificates as "stock", which overstated how much of the market was in equities.</li>
+  <li><strong>Days with missing funds looked like crashes.</strong> The registry sometimes returns only a fraction of the funds; those days are dropped.</li>
+  <li><strong>Mixed units.</strong> Two holdings columns were in percent while the rest were fractions.</li>
+  <li><strong>Reported returns did not match prices.</strong> The registry's daily-return field often disagrees with the fund's own unit price (one day showed +335% while the price fell 5%), which made some funds look like they had gained 2,000% in a year. Returns now come from the unit price, with payouts added back.</li>
+  <li><strong>One fixed 30% safe rate for every Sharpe ratio.</strong> For bond funds, whose value barely moves, that produces huge meaningless numbers. Ratios are now shown only for funds that take market risk, against the median return of fixed-income funds.</li>
+</ul>
+<p>The data started fresh in November 2026 and grows by a week at each update, so longer returns and the risk measures (which need about three months of daily data) fill in over time. One command collects the new days with
+  <a href="https://github.com/Amir-Shokat/tehran-market-data">tehran-market-data</a>, rebuilds these files and publishes the site.</p>

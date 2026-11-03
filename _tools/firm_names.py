@@ -33,6 +33,12 @@ EN = {
     "کارگزاری بانک صادرات ایران": "Bank Saderat Brokerage",
     "گروه خدمات بازار سرمایه آشنا": "Ashna Capital Market Services",
     "گروه سرمایه‌گذاری توسعه صنعتی ایران": "Iran Industrial Development Investment Group",
+    "مشاور سرمایه‌گذاری ترنج": "Toranj Investment Advisors",
+    "مشاور سرمایه‌گذاری پرتو آفتاب کیان": "Partoo Aftab Kian Investment Advisors",
+    "سبدگردان توسعه فیروزه": "Firouzeh Asset Management",
+    "مشاور سرمایه‌گذاری ارزش پرداز آریان": "Arzesh Pardaz Arian Investment Advisors",
+    "سبدگردان اقتصاد بیدار": "Eghtesad Bidar Asset Management",
+    "سبدگردان اندیشه صبا": "Andisheh Saba Asset Management",
 }
 
 

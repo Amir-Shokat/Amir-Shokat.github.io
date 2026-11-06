@@ -1,0 +1,26 @@
+---
+title: Portfolio Risk Metrics
+order: -2
+kicker: Portfolio analytics · Investor risk
+tags: risk data
+summary: Historical portfolio risk derived from daily TWR, with versioned methodology and a reason attached to every unavailable result.
+question: How volatile was the portfolio, what was its worst fall, did it recover, and was its return worth the risk taken?
+built: A tested Python package for volatility, downside deviation, Sharpe, Sortino, drawdown, recovery, historical VaR, expected shortfall and beta.
+result: 72 automated tests pin formulas, eligibility gates, missing-data behaviour, session counting and versioned calculation contracts.
+skills: Risk methodology · product specification · financial modelling · Python · BDD · testing
+tech: Daily TWR input, per-session Treasury-bill return, 250-session annualisation, market-session recovery and synthetic data only.
+repo: portfolio-risk-metrics
+tests: 72
+toc: [["meaning", "What users learn"], ["works", "How it works"], ["honest", "Designed to say unknown"], ["chain", "Where it fits"]]
+---
+<h2 id="meaning">What users learn</h2>
+<p>Volatility describes typical movement; drawdown shows the largest fall from a previous peak; recovery counts how many market sessions it took to regain that peak. Sharpe and Sortino compare return with risk, while VaR, expected shortfall and beta provide additional diagnostic views.</p>
+
+<h2 id="works">How it works</h2>
+<p>The package aligns daily, cash-flow-adjusted TWR with an explicit trading calendar and a risk-free series. Every methodology choice—annualisation, downside target, history gate and recovery convention—lives in a versioned machine-readable contract.</p>
+
+<h2 id="honest">Designed to say “unknown”</h2>
+<p>A missing return is not zero, a not-computed session is not a holiday, and an undefined ratio is not poor performance. Each result carries a status, reasons and observation counts, so the interface can explain why a number is unavailable.</p>
+
+<h2 id="chain">Where it fits</h2>
+<p>This project consumes TWR from the <a href="{{ '/projects/portfolio-return-engine/' | relative_url }}">Portfolio Return Engine</a>. <a href="{{ '/projects/return-monitoring/' | relative_url }}">Return Monitoring</a> then checks whether portfolio calculations remain fresh, complete and displayable in daily operation.</p>

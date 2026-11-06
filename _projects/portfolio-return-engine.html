@@ -1,0 +1,31 @@
+---
+title: Portfolio Return Engine
+order: -3
+kicker: Portfolio analytics · Performance
+tags: data risk
+summary: A transparent engine for TWR, personal money-weighted return and wealth change, with explicit rules for when a number is safe to show.
+question: How did the investments perform, what did the investor earn on their own money, and how much wealth changed beyond deposits and withdrawals?
+built: A tested Python package that classifies cash flows, builds daily portfolio values, calculates TWR, robust XIRR-based MWR and wealth change, and applies display rules per horizon.
+result: 105 automated tests cover transaction mapping, credit, options, calendar horizons, numerical edge cases and unavailable states.
+skills: Performance measurement · product methodology · financial modelling · Python · BDD · testing
+tech: ISO 8601 dates, Gregorian horizons, daily TWR, Actual/365 XIRR with all-root scanning, wealth-change reconciliation and synthetic data only.
+repo: portfolio-return-engine
+tests: 105
+toc: [["questions", "What it answers"], ["works", "How it works"], ["hard", "Hard cases"], ["chain", "Where it fits"]]
+---
+<h2 id="questions">What it answers</h2>
+<ul>
+  <li><strong>TWR:</strong> how the investments performed, independent of deposit timing.</li>
+  <li><strong>MWR:</strong> the investor's personal outcome, including when money entered and left.</li>
+  <li><strong>Wealth change:</strong> the change in account value after separating external cash flows.</li>
+</ul>
+
+<h2 id="works">How it works</h2>
+<p>Each transaction type has a written rule. External flows cross the account boundary; trades, fees and corporate actions are internal. The engine builds a daily value series, measures daily performance, links it geometrically and calculates 1M, 3M, 6M, 1Y, YTD and since-entry periods.</p>
+<p>Every output carries a status. Missing data, insufficient history or an unknown transaction type never becomes a misleading 0%.</p>
+
+<h2 id="hard">Hard cases</h2>
+<p>The tests cover same-day deposits and withdrawals, near-zero starting capital, transferred securities, externally paid dividends, purchase credit, option settlement, multiple valid XIRR roots and missing valuations. These edge cases are where plausible-looking portfolio numbers most often fail.</p>
+
+<h2 id="chain">Where it fits</h2>
+<p>It consumes validated portfolio inputs and produces the daily TWR used by <a href="{{ '/projects/portfolio-risk-metrics/' | relative_url }}">Portfolio Risk Metrics</a>. Its production outputs are supervised by Return Monitoring.</p>

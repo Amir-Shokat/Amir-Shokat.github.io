@@ -1,0 +1,31 @@
+---
+title: Return Monitoring
+order: -1
+kicker: Portfolio analytics · Operations
+tags: data risk
+summary: Full-population monitoring for daily TWR and MWR: freshness, coverage, display eligibility, quality checks and owned incidents.
+question: Every morning, are portfolio returns current, complete and safe to show—and if not, who needs to act?
+built: A Python package with a CLI, self-contained HTML report and Streamlit/DuckDB dashboard over synthetic engine output.
+result: 59 automated tests cover status mapping, business-day freshness, denominator identities, quality checks, alert severity and incident grouping.
+skills: Monitoring design · data contracts · alerting · product operations · Python · SQL · testing
+tech: DuckDB full-population scans, Saturday–Sunday weekend, expected-population coverage, four-layer statuses, quality rules and masked identifiers.
+repo: return-monitoring
+tests: 59
+toc: [["questions", "What it answers"], ["works", "How it works"], ["alerts", "From alert to incident"], ["chain", "Where it fits"]]
+---
+<h2 id="questions">What it answers</h2>
+<ul>
+  <li><strong>Freshness:</strong> did every required input arrive, and are outputs dated correctly?</li>
+  <li><strong>Coverage:</strong> did every eligible account receive every expected horizon?</li>
+  <li><strong>Display safety:</strong> did a successful calculation also pass objective validation and review rules?</li>
+  <li><strong>Ownership:</strong> who contains the user impact and who fixes the underlying cause?</li>
+</ul>
+
+<h2 id="works">How it works</h2>
+<p>The denominator starts with the expected account population, not the rows a job happened to write. Each expected result lands in exactly one bucket: computed, not computed, unknown status or missing. DuckDB then runs quality checks across the whole population rather than a sample.</p>
+
+<h2 id="alerts">From alert to incident</h2>
+<p>Rules separate guardrails from targets and assign severity based on user impact. Confirmed causal links group related symptoms into one incident, so a late input feed does not create a page for every downstream metric. Alert payloads contain counts and owners, never raw user identifiers.</p>
+
+<h2 id="chain">Where it fits</h2>
+<p>This is the operational end of the chain: Data Quality validates inputs, the Return Engine calculates performance, Risk Metrics interprets TWR, and this project verifies that daily portfolio outputs remain trustworthy.</p>

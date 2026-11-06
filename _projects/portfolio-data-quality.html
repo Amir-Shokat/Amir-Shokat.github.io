@@ -1,0 +1,31 @@
+---
+title: Portfolio Data Quality
+order: -4
+kicker: Portfolio analytics · Data controls
+tags: data risk
+summary: A synthetic reconciliation toolkit that catches broken holdings and preserves the evidence needed to investigate them.
+question: Can the positions, transactions and corporate actions be trusted before they enter a customer-facing calculation?
+built: A tested Python toolkit with independent data routes, seeded defects, replay-and-compare controls, explicit outcomes and an exception tracker.
+result: 87 automated tests cover clean controls, injected defects, false positives, lineage and reconciliation evidence.
+skills: Data quality · reconciliation · acceptance criteria · Python · SQL · test design
+tech: Synthetic ISO-date data, Monday–Friday example calendar, report-only replay, CSV and SQLite loaders, explicit comparison outcomes and stable fingerprints.
+repo: portfolio-data-quality
+tests: 87
+toc: [["why", "Why it matters"], ["works", "How it works"], ["evidence", "Technical evidence"], ["chain", "Where it fits"]]
+---
+<h2 id="why">Why it matters</h2>
+<p>A return or risk number can be mathematically correct and still be wrong because a holding, price or corporate action was missing upstream. This project makes those disagreements visible before they reach users.</p>
+
+<h2 id="works">How it works</h2>
+<p>Two independent routes describe the same portfolio: a depository feed and a transaction ledger with corporate actions. Each route is checked internally before they are compared. A disagreement becomes an investigation candidate; neither source is silently declared correct.</p>
+<ul>
+  <li>Every check names its scope, denominator, severity and expected evidence.</li>
+  <li>Positive and negative controls show whether a check can detect a known defect without flagging clean data.</li>
+  <li>The replay is report-only: it never repairs or overwrites a source system.</li>
+</ul>
+
+<h2 id="evidence">Technical evidence</h2>
+<p>The repository contains a seeded synthetic dataset, a reproducible defect manifest, Python and SQL checks, range compression, stable fingerprints and Excel exception registers. All 87 tests run without customer or employer data.</p>
+
+<h2 id="chain">Where it fits</h2>
+<p>This is the first control in the portfolio analytics chain. Trusted inputs feed the <a href="{{ '/projects/portfolio-return-engine/' | relative_url }}">Portfolio Return Engine</a>, followed by risk calculation and production monitoring.</p>

@@ -2,6 +2,7 @@
 title: Portfolio Return Engine
 order: -3
 kicker: Portfolio analytics · Performance
+thumb: portfolio-return-engine.jpg
 tags: data risk
 summary: A transparent engine for TWR, personal money-weighted return and wealth change, with explicit rules for when a number is safe to show.
 question: How did the investments perform, what did the investor earn on their own money, and how much wealth changed beyond deposits and withdrawals?
@@ -11,6 +12,8 @@ skills: Performance measurement · product methodology · financial modelling ·
 tech: ISO 8601 dates, Gregorian horizons, daily TWR, Actual/365 XIRR with all-root scanning, wealth-change reconciliation and synthetic data only.
 repo: portfolio-return-engine
 tests: 105
+chartjs: true
+demo: portfolio-chain
 toc: [["questions", "What it answers"], ["works", "How it works"], ["hard", "Hard cases"], ["chain", "Where it fits"]]
 ---
 <h2 id="questions">What it answers</h2>
@@ -22,6 +25,16 @@ toc: [["questions", "What it answers"], ["works", "How it works"], ["hard", "Har
 
 <h2 id="works">How it works</h2>
 <p>Each transaction type has a written rule. External flows cross the account boundary; trades, fees and corporate actions are internal. The engine builds a daily value series, measures daily performance, links it geometrically and calculates 1M, 3M, 6M, 1Y, YTD and since-entry periods.</p>
+<div class="demo" id="return-demo">
+  <div class="demo-head"><h3>See why cash-flow timing matters</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls">
+    <div class="control"><label for="ret-flow">Deposit amount <output id="ret-flow-out"></output></label><input id="ret-flow" type="range" min="0" max="150" step="10" value="80"></div>
+    <div class="control"><label for="ret-time">Deposit timing</label><select id="ret-time"><option value="early">Before the strong month</option><option value="late">After the strong month</option></select></div>
+  </div>
+  <div class="chart short"><canvas id="ret-chart" aria-label="Portfolio value and external cash flow"></canvas></div>
+  <div class="stats" id="ret-stats"></div>
+  <p class="callout" id="ret-read"></p>
+</div>
 <p>Every output carries a status. Missing data, insufficient history or an unknown transaction type never becomes a misleading 0%.</p>
 
 <h2 id="hard">Hard cases</h2>

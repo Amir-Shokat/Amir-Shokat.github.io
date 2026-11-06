@@ -340,6 +340,9 @@ a.direction:hover { text-decoration: none; border-color: var(--line-strong); box
 .data-table td { padding: 7px 8px; border-bottom: 1px solid var(--line); color: var(--text-2); }
 .data-table td.num, .data-table th.num { text-align: right; }
 .table-wrap { overflow-x: auto; }
+.status-dot { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.status-dot.ok { color: var(--good); background: var(--good-soft); }
+.status-dot.warn { color: var(--clay); background: var(--clay-soft); }
 .demo-error { color: var(--bad); font-weight: 500; font-size: 14.5px; }
 .sentiment-meter { height: 14px; border-radius: 999px; background: linear-gradient(90deg, #c8734f, var(--surface-2) 50%, #6a8f6b); position: relative; margin: 14px 0 6px; }
 .sentiment-meter i { position: absolute; top: -5px; width: 4px; height: 24px; background: var(--text); border-radius: 2px; transform: translateX(-50%); transition: left .3s ease; }

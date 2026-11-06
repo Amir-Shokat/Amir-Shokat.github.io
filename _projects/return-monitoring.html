@@ -2,6 +2,7 @@
 title: Return Monitoring
 order: -1
 kicker: Portfolio analytics · Operations
+thumb: return-monitoring.jpg
 tags: data risk
 summary: "Full-population monitoring for daily TWR and MWR: freshness, coverage, display eligibility, quality checks and owned incidents."
 question: Every morning, are portfolio returns current, complete and safe to show—and if not, who needs to act?
@@ -11,6 +12,8 @@ skills: Monitoring design · data contracts · alerting · product operations ·
 tech: DuckDB full-population scans, Saturday–Sunday weekend, expected-population coverage, four-layer statuses, quality rules and masked identifiers.
 repo: return-monitoring
 tests: 59
+chartjs: true
+demo: portfolio-chain
 toc: [["questions", "What it answers"], ["works", "How it works"], ["alerts", "From alert to incident"], ["chain", "Where it fits"]]
 ---
 <h2 id="questions">What it answers</h2>
@@ -23,6 +26,13 @@ toc: [["questions", "What it answers"], ["works", "How it works"], ["alerts", "F
 
 <h2 id="works">How it works</h2>
 <p>The denominator starts with the expected account population, not the rows a job happened to write. Each expected result lands in exactly one bucket: computed, not computed, unknown status or missing. DuckDB then runs quality checks across the whole population rather than a sample.</p>
+<div class="demo" id="monitor-demo">
+  <div class="demo-head"><h3>Run the morning check</h3><span class="demo-tag">Try it</span></div>
+  <div class="control"><label for="mon-case">Scenario</label><select id="mon-case"><option value="healthy">All systems healthy</option><option value="late">Cash-flow feed late</option><option value="partial">Return partition incomplete</option><option value="unsafe">Invalid values reached review</option></select></div>
+  <div class="stats" id="mon-stats"></div>
+  <div class="table-wrap"><table class="data-table"><thead><tr><th>Check</th><th>Status</th><th class="num">Affected</th><th>Owner</th></tr></thead><tbody id="mon-rows"></tbody></table></div>
+  <p class="callout" id="mon-read"></p>
+</div>
 
 <h2 id="alerts">From alert to incident</h2>
 <p>Rules separate guardrails from targets and assign severity based on user impact. Confirmed causal links group related symptoms into one incident, so a late input feed does not create a page for every downstream metric. Alert payloads contain counts and owners, never raw user identifiers.</p>

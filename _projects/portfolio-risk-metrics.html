@@ -2,6 +2,7 @@
 title: Portfolio Risk Metrics
 order: -2
 kicker: Portfolio analytics · Investor risk
+thumb: portfolio-risk-metrics.jpg
 tags: risk data
 summary: Historical portfolio risk derived from daily TWR, with versioned methodology and a reason attached to every unavailable result.
 question: How volatile was the portfolio, what was its worst fall, did it recover, and was its return worth the risk taken?
@@ -11,6 +12,8 @@ skills: Risk methodology · product specification · financial modelling · Pyth
 tech: Daily TWR input, per-session Treasury-bill return, 250-session annualisation, market-session recovery and synthetic data only.
 repo: portfolio-risk-metrics
 tests: 72
+chartjs: true
+demo: portfolio-chain
 toc: [["meaning", "What users learn"], ["works", "How it works"], ["honest", "Designed to say unknown"], ["chain", "Where it fits"]]
 ---
 <h2 id="meaning">What users learn</h2>
@@ -18,6 +21,16 @@ toc: [["meaning", "What users learn"], ["works", "How it works"], ["honest", "De
 
 <h2 id="works">How it works</h2>
 <p>The package aligns daily, cash-flow-adjusted TWR with an explicit trading calendar and a risk-free series. Every methodology choice—annualisation, downside target, history gate and recovery convention—lives in a versioned machine-readable contract.</p>
+<div class="demo" id="risk-demo">
+  <div class="demo-head"><h3>Shape a drawdown</h3><span class="demo-tag">Try it</span></div>
+  <div class="controls">
+    <div class="control"><label for="risk-depth">Fall from peak <output id="risk-depth-out"></output></label><input id="risk-depth" type="range" min="5" max="40" step="1" value="20"></div>
+    <div class="control"><label for="risk-recovery">Recovery time <output id="risk-recovery-out"></output></label><input id="risk-recovery" type="range" min="5" max="60" step="5" value="30"></div>
+  </div>
+  <div class="chart short"><canvas id="risk-chart" aria-label="Interactive portfolio drawdown and recovery path"></canvas></div>
+  <div class="stats" id="risk-stats"></div>
+  <p class="demo-note">Illustrative path only. The project calculates these measures from complete daily TWR history.</p>
+</div>
 
 <h2 id="honest">Designed to say “unknown”</h2>
 <p>A missing return is not zero, a not-computed session is not a holiday, and an undefined ratio is not poor performance. Each result carries a status, reasons and observation counts, so the interface can explain why a number is unavailable.</p>
